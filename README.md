@@ -2,9 +2,93 @@
 
 # 🚗 MallPark
 
-> Smart Mall Parking Dashboard
+### Smart Mall Parking Dashboard
 
-![HTML](https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS](https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![Hackathon](https://img.shields.io/badge/Hackathon-2026-success?style=for-the-badge)
+> **Making parking smarter, faster, and stress-free.**
+
+---
+
+## 📖 About
+
+**MallPark** is a modern, responsive parking management dashboard designed to simplify parking inside shopping malls. It enables visitors to quickly locate available parking spaces through an interactive floor-wise layout, real-time occupancy visualization, and insightful analytics.
+
+The application focuses on delivering an intuitive user experience while demonstrating modern frontend development practices with responsive design, interactive dashboards, and simulated live parking updates.
+
+---
+
+## ✨ Features
+
+* 🚘 Floor-wise Parking Layout
+* 🔍 Smart Search & Filtering
+* 📊 Occupancy Analytics Dashboard
+* 📱 Fully Responsive Design
+* ⚡ EV Charging Station Indicators
+* 🌙 Dark Mode
+* 🎫 Parking Reservation Interface
+* 💰 Parking Fee Estimator
+* 📈 Live Parking Simulation using Mock Data
+
+---
+
+## 🛠️ Tech Stack
+
+* HTML5
+* CSS3
+* JavaScript (ES6)
+* Chart.js
+* JSON (Mock Data)
+
+---
+
+## 📂 Project Structure
+
+```text
+MallPark/
+│
+├── index.html
+├── css/
+├── js/
+├── assets/
+├── data/
+└── README.md
+```
+
+---
+
+## 🎯 Future Scope
+
+* IoT Sensor Integration
+* QR-Based Parking Navigation
+* AI Parking Recommendation
+* Mobile Application
+* Real-Time Parking Sensors
+* Online Reservation System
+
+---
+
+## 👥 Team
+
+| Name         | Role                             |
+| -----------  | -------------------------------- |
+| Arnav Dutta  | Team Lead & Frontend Development |
+| Sarang Joshi | UI/UX                            |
+| Aryan Jaiswal| Dashboard & Analytics            |
+| Ayman Kazi   | Testing & Documentation          |
+
+---
+
+## 📌 Project Status
+
+🚧 Under Active Development
+
+This project is being developed as part of a Frontend Web Development Hackathon.
+
+---
+
+## ⭐ If you like this project
+
+Give it a ⭐ on GitHub!
+
+---
+
+Made with ❤️ by Team MallPark
