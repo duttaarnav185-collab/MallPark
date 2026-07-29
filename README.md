@@ -91,4 +91,4 @@ Give it a ⭐ on GitHub!
 
 ---
 
-Made with ❤️ by Team MallPark
+Made with ❤️ by Team The Renderers
