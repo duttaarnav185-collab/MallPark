@@ -70,7 +70,7 @@ MallPark/
 
 | Name         | Role                             |
 | -----------  | -------------------------------- |
-| Arnav Dutta  | Team Lead & Frontend Development |
+| Arnaav Dutta | Team Lead & Frontend Development |
 | Sarang Joshi | UI/UX                            |
 | Aryan Jaiswal| Dashboard & Analytics            |
 | Ayman Kazi   | Testing & Documentation          |
