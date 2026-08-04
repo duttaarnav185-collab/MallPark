@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MallPark Pro - Complete Real-World System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { darkBg: '#0f172a', darkCard: '#1e293b' },
+                    animation: { 'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite' }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { transition: background-color 0.3s, color 0.3s; }
+        .slot-card { transition: all 0.2s ease-in-out; }
+        .slot-card:hover { transform: translateY(-3px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .highlight-slot { border: 4px solid #3b82f6 !important; animation: bounce 1s infinite; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        /* Toggle Switch CSS */
+        input:checked ~ .dot { transform: translateX(100%); background-color: #f43f5e; }
+        input:checked ~ .block { background-color: #ffe4e6; }
+        .dark input:checked ~ .block { background-color: #881337; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 dark:bg-darkBg dark:text-gray-100 min-h-screen flex flex-col font-sans">
+
+    <!-- Top Navigation -->
+    <nav class="bg-indigo-600 dark:bg-indigo-900 text-white p-4 shadow-lg sticky top-0 z-40 transition-colors duration-300" id="mainNav">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3 text-2xl font-black tracking-wide">
+                <div class="bg-white text-indigo-600 p-2 rounded-xl shadow"><i class="fa-solid fa-square-p text-2xl"></i></div>
+                <span>MallPark <span class="text-xs bg-indigo-500 text-white px-2 py-0.5 rounded-full uppercase tracking-wider">PRO</span></span>
+            </div>
+            
+            <!-- Find My Car / Checkout Bar -->
+            <div class="flex-grow max-w-lg w-full relative flex gap-2">
+                <div class="relative flex-grow">
+                    <input type="text" id="findCarInput" placeholder="Enter Plate (e.g. MH12AB1234)" 
+                           class="w-full py-2 pl-10 pr-4 rounded-xl text-gray-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 shadow-inner uppercase">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-400"></i>
+                </div>
+                <button onclick="findMyCar()" class="bg-blue-500 text-white text-sm font-bold px-4 py-2 rounded-xl hover:bg-blue-600 shadow">Find</button>
+                <button onclick="checkoutCar()" class="bg-emerald-500 text-white text-sm font-bold px-4 py-2 rounded-xl hover:bg-emerald-600 shadow">Checkout</button>
+            </div>
+
+            <button id="themeToggle" class="bg-indigo-700 dark:bg-indigo-950 px-4 py-2 rounded-xl text-sm font-medium hover:bg-indigo-800 shadow">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard -->
+    <main class="flex-grow p-4 md:p-6 max-w-7xl mx-auto w-full space-y-6">
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <div class="bg-white dark:bg-darkCard p-4 rounded-2xl shadow flex items-center space-x-4">
+                <div class="p-3 bg-blue-100 text-blue-600 dark:bg-blue-900/50 rounded-xl"><i class="fa-solid fa-layer-group text-2xl"></i></div>
+                <div><div class="text-xs text-gray-500 font-semibold uppercase">Total Capacity</div><div class="text-2xl font-extrabold">60 Slots</div></div>
+            </div>
+            <div class="bg-white dark:bg-darkCard p-4 rounded-2xl shadow flex items-center space-x-4">
+                <div class="p-3 bg-emerald-100 text-emerald-600 dark:bg-emerald-900/50 rounded-xl"><i class="fa-solid fa-circle-check text-2xl"></i></div>
+                <div><div class="text-xs text-gray-500 font-semibold uppercase">Available Free</div><div id="statAvailable" class="text-2xl font-extrabold text-emerald-600">0</div></div>
+            </div>
+            <div class="bg-white dark:bg-darkCard p-4 rounded-2xl shadow flex items-center space-x-4">
+                <div class="p-3 bg-rose-100 text-rose-600 dark:bg-rose-900/50 rounded-xl"><i class="fa-solid fa-triangle-exclamation text-2xl"></i></div>
+                <div><div class="text-xs text-gray-500 font-semibold uppercase">Overstaying</div><div id="statOverstay" class="text-2xl font-extrabold text-rose-600">0</div></div>
+            </div>
+            <div class="bg-white dark:bg-darkCard p-4 rounded-2xl shadow flex items-center space-x-4">
+                <div class="p-3 bg-purple-100 text-purple-600 dark:bg-purple-900/50 rounded-xl"><i class="fa-solid fa-indian-rupee-sign text-2xl"></i></div>
+                <div><div class="text-xs text-gray-500 font-semibold uppercase">Total Revenue</div><div id="statRevenue" class="text-2xl font-extrabold text-purple-600">₹0</div></div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+            <!-- LEFT SIDEBAR -->
+            <div class="lg:col-span-4 space-y-6">
+                
+                <!-- Filters & Controls -->
+                <div class="bg-white dark:bg-darkCard p-5 rounded-2xl shadow border border-gray-100 dark:border-gray-700">
+                    <div class="flex justify-between items-center mb-4 border-b border-gray-100 dark:border-gray-700 pb-2">
+                        <h2 class="text-lg font-bold"><i class="fa-solid fa-sliders text-indigo-500"></i> Controls</h2>
+                        
+                        <!-- Peak Hour Toggle -->
+                        <label class="flex items-center cursor-pointer">
+                            <div class="relative">
+                                <input type="checkbox" id="peakToggle" class="sr-only" onchange="togglePeakHours()">
+                                <div class="block bg-gray-300 dark:bg-gray-600 w-10 h-6 rounded-full transition"></div>
+                                <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition transform"></div>
+                            </div>
+                            <span class="ml-2 text-[10px] font-bold text-rose-500 uppercase flex items-center">
+                                <i class="fa-solid fa-fire mr-1"></i> Peak Surcharge
+                            </span>
+                        </label>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Select Floor</label>
+                            <select id="floorSelect" class="w-full p-2.5 border rounded-xl dark:bg-gray-800 dark:border-gray-700">
+                                <option value="1">Floor 1 (Ground Level)</option>
+                                <option value="2">Floor 2 (Executive Level)</option>
+                                <option value="3">Floor 3 (Roof Level)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Vehicle Type</label>
+                            <select id="typeSelect" class="w-full p-2.5 border rounded-xl dark:bg-gray-800 dark:border-gray-700">
+                                <option value="all">All Vehicle Types</option>
+                                <option value="pwd">♿ Accessible/PWD (Flat ₹30)</option>
+                                <option value="car">🚗 Cars (₹50/hr)</option>
+                                <option value="bike">🏍️ Motorcycles (₹20/hr)</option>
+                                <option value="ev">⚡ Electric Vehicles (₹80/hr)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="bg-white dark:bg-darkCard p-5 rounded-2xl shadow">
+                    <h3 class="text-sm font-bold uppercase text-gray-500 mb-3"><i class="fa-solid fa-chart-pie text-indigo-500"></i> Capacity Setup</h3>
+                    <div class="h-44"><canvas id="pieChart"></canvas></div>
+                </div>
+
+                <!-- Active Bookings & Overstay Simulation -->
+                <div class="bg-white dark:bg-darkCard p-5 rounded-2xl shadow flex flex-col h-80">
+                    <div class="flex justify-between items-center mb-3 border-b border-gray-100 dark:border-gray-700 pb-2">
+                        <h2 class="text-lg font-bold"><i class="fa-solid fa-receipt text-indigo-500"></i> Bookings</h2>
+                        <button onclick="simulateTimeLeap()" class="text-[10px] bg-rose-100 text-rose-700 hover:bg-rose-200 px-2 py-1 rounded font-bold transition flex items-center">
+                            <i class="fa-solid fa-clock-rotate-left mr-1"></i> +2 Hrs (Simulate Overstay)
+                        </button>
+                    </div>
+                    <div id="reservationsList" class="space-y-3 overflow-y-auto flex-grow pr-1 text-xs"></div>
+                </div>
+            </div>
+
+            <!-- RIGHT MAIN: Dynamic Parking Layout Grid -->
+            <div class="lg:col-span-8 bg-white dark:bg-darkCard p-6 rounded-2xl shadow flex flex-col">
+                <div class="flex flex-col xl:flex-row xl:items-center justify-between gap-4 mb-6 border-b border-gray-100 dark:border-gray-700 pb-4">
+                    <div>
+                        <h2 class="text-2xl font-black tracking-tight">Interactive Layout</h2>
+                        <p class="text-sm text-gray-500">Showing <span id="currentFloorName" class="font-bold text-indigo-600">Floor 1</span></p>
+                    </div>
+                    
+                    <!-- Legend -->
+                    <div class="flex flex-wrap items-center gap-2 text-[11px] font-bold uppercase">
+                        <span class="px-2 py-1 rounded bg-emerald-100 text-emerald-800"><span class="text-emerald-500 mr-1">●</span> Free</span>
+                        <span class="px-2 py-1 rounded bg-gray-200 text-gray-800 dark:bg-gray-700 dark:text-gray-300"><span class="text-gray-500 mr-1">●</span> Occupied</span>
+                        <span class="px-2 py-1 rounded bg-amber-100 text-amber-800"><span class="text-amber-500 mr-1">●</span> Reserved</span>
+                        <span class="px-2 py-1 rounded bg-rose-100 text-rose-800 animate-pulse-fast"><span class="text-rose-500 mr-1">●</span> Overstay</span>
+                    </div>
+                </div>
+
+                <div id="parkingGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 flex-grow">
+                    <!-- Slots dynamically generated -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- MODAL 1: Booking Window -->
+    <div id="bookingModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-darkCard rounded-3xl max-w-md w-full p-6 shadow-2xl">
+            <div class="flex justify-between items-center border-b dark:border-gray-700 pb-3 mb-4">
+                <h3 class="text-xl font-bold">Reserve Slot <span id="modalSlotId" class="text-indigo-600"></span></h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
+            </div>
+
+            <form id="bookingForm" onsubmit="confirmBooking(event)" class="space-y-4">
+                <input type="hidden" id="modalSlotIndex">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Driver Name</label>
+                    <input type="text" id="custName" required placeholder="John Doe" class="w-full p-2.5 border rounded-xl dark:bg-gray-800 dark:border-gray-700">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">License Plate</label>
+                    <input type="text" id="custPlate" required placeholder="MH12AB1234" class="w-full p-2.5 border rounded-xl dark:bg-gray-800 dark:border-gray-700 uppercase">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Start Time</label>
+                        <input type="time" id="bookTime" required class="w-full p-2.5 border rounded-xl dark:bg-gray-800 dark:border-gray-700">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Hours</label>
+                        <input type="number" id="bookHours" min="1" max="24" value="2" required oninput="calculateModalFee()" class="w-full p-2.5 border rounded-xl dark:bg-gray-800 dark:border-gray-700">
+                    </div>
+                </div>
+
+                <div class="bg-indigo-50 dark:bg-indigo-950 p-4 rounded-xl border border-indigo-100 dark:border-indigo-900 flex justify-between items-center relative overflow-hidden">
+                    <div id="peakWarning" class="absolute top-0 left-0 w-full bg-rose-500 text-white text-[9px] font-bold text-center uppercase hidden">Peak Hours Active (1.5x)</div>
+                    <div class="mt-2">
+                        <div class="text-xs text-indigo-600 dark:text-indigo-400 font-semibold">Total Charge</div>
+                        <div id="modalHourlyRate" class="text-xs text-gray-500">Rate: ₹50/hr</div>
+                    </div>
+                    <div id="modalTotalCharge" class="text-2xl mt-2 font-black text-indigo-600 dark:text-indigo-300">₹100</div>
+                </div>
+
+                <button type="submit" class="w-full py-3 rounded-xl bg-indigo-600 text-white font-bold hover:bg-indigo-700 shadow-lg">Confirm & Pay</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL 2: QR Code Ticket (NEW FEATURE) -->
+    <div id="ticketModal" class="fixed inset-0 bg-black/70 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-darkCard rounded-3xl max-w-sm w-full p-6 shadow-2xl text-center border-t-8 border-emerald-500">
+            <h2 class="text-2xl font-black text-emerald-600 dark:text-emerald-400 mb-2">Booking Confirmed!</h2>
+            <p class="text-sm text-gray-500 mb-6">Please show this QR code at the entrance scanner.</p>
+            
+            <div class="bg-gray-100 dark:bg-gray-800 p-4 rounded-2xl inline-block shadow-inner mb-4">
+                <!-- Live QR Code generated via API -->
+                <img id="qrImage" src="" alt="QR Code Ticket" class="w-40 h-40 mx-auto rounded-lg">
+            </div>
+
+            <div class="bg-gray-50 dark:bg-gray-900 rounded-xl p-4 text-left border dark:border-gray-700">
+                <div class="flex justify-between border-b dark:border-gray-700 pb-2 mb-2">
+                    <span class="text-xs text-gray-500 uppercase font-bold">Slot</span>
+                    <span class="font-black text-indigo-600" id="ticketSlot"></span>
+                </div>
+                <div class="flex justify-between border-b dark:border-gray-700 pb-2 mb-2">
+                    <span class="text-xs text-gray-500 uppercase font-bold">Vehicle Plate</span>
+                    <span class="font-bold" id="ticketPlate"></span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-xs text-gray-500 uppercase font-bold">Amount Paid</span>
+                    <span class="font-bold text-emerald-600" id="ticketAmount"></span>
+                </div>
+            </div>
+            
+            <button onclick="closeTicket()" class="w-full mt-6 py-3 rounded-xl bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white font-bold hover:bg-gray-300 transition">Close Ticket</button>
+        </div>
+    </div>
+
+    <script>
+        // --- DATA STATE ---
+        const totalFloors = 3;
+        const slotsPerFloor = 20;
+        let parkingData = [];
+        let reservations = [];
+        let currentFloor = 1;
+        let currentType = 'all';
+        let isPeakHours = false;
+
+        const RATES = { car: 50, bike: 20, ev: 80, pwd: 30 };
+        let pieChart;
+
+        // --- 1. INITIALIZE DATA ---
+        function initData() {
+            parkingData = [];
+            for (let f = 1; f <= totalFloors; f++) {
+                for (let s = 1; s <= slotsPerFloor; s++) {
+                    const isPwd = (s <= 2);
+                    const isEV = (s >= 3 && s <= 5);
+                    const isBike = (s % 4 === 0 && !isEV && !isPwd);
+                    const type = isPwd ? 'pwd' : (isEV ? 'ev' : (isBike ? 'bike' : 'car'));
+                    
+                    parkingData.push({
+                        id: `F${f}-S${s < 10 ? '0' + s : s}`,
+                        floor: f,
+                        type: type,
+                        status: 'free', 
+                        reservedDetails: null
+                    });
+                }
+            }
+
+            // Randomly occupy some spots for realism
+            parkingData.forEach(slot => {
+                if(slot.status === 'free' && Math.random() > 0.7) {
+                    slot.status = 'occupied';
+                }
+            });
+            
+            // Seed a few reservations so search/checkout can be tested instantly
+            seedReservation(parkingData[5], 'Aarav K.', 'MH12AB1234', 2);
+            seedReservation(parkingData[25], 'Priya M.', 'DL01CH9999', 3);
+            seedReservation(parkingData[12], 'John D.', 'KA05XY7777', 1);
+        }
+
+        function seedReservation(slot, name, plate, hours) {
+            slot.status = 'reserved';
+            const charge = hours * RATES[slot.type];
+            slot.reservedDetails = { name, plate, hours, charge };
+            reservations.push({ slotId: slot.id, name, plate, charge, isOverstay: false });
+        }
+
+        // --- 2. RENDER ENGINE ---
+        function renderDashboard() {
+            const gridEl = document.getElementById('parkingGrid');
+            document.getElementById('currentFloorName').innerText = `Floor ${currentFloor}`;
+
+            // Apply Filters (FIXED GLITCH)
+            const visibleSlots = parkingData.filter(s => {
+                const matchFloor = s.floor === currentFloor;
+                const matchType = currentType === 'all' || s.type === currentType;
+                return matchFloor && matchType;
+            });
+
+            // Update Stats (FIXED OVERSTAY MATH GLITCH)
+            const freeCount = parkingData.filter(s => s.status === 'free').length;
+            const overstayCount = parkingData.filter(s => s.status === 'overstay').length;
+            const revenue = reservations.reduce((sum, r) => sum + r.charge, 0);
+
+            document.getElementById('statAvailable').innerText = freeCount;
+            document.getElementById('statOverstay').innerText = overstayCount;
+            document.getElementById('statRevenue').innerText = `₹${revenue}`;
+
+            gridEl.innerHTML = '';
+            if (visibleSlots.length === 0) {
+                gridEl.innerHTML = `<div class="col-span-full text-center py-10 text-gray-400">No slots match filter.</div>`;
+            }
+
+            visibleSlots.forEach(slot => {
+                const card = document.createElement('div');
+                
+                let bg
