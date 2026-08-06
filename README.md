@@ -246,12 +246,12 @@ Use the navigation bar icon to switch between:
 
 ### Team Name: **Mall Mavericks**
 
-| Team Members | Branch                                             |
+| Team Members | Role                                               |
 | -----------  | -------------------------------------------------- |
-| Arnaav Dutta | Information Technology (IT)                      |
-| Sarang Joshi | Information Technology (IT)                       |                           |
-| Aryan Jaiswal| Information Technology (IT)                        |
-| Ayman Kazi   | Information Technology (IT)                        |
+| Arnaav Dutta | Team Lead and AI integration                       |
+| Sarang Joshi | UI/UX                                              |                           
+| Aryan Jaiswal| Frontend Development                               |
+| Ayman Kazi   | Testing and Debugging                              |
 
 </div>
 
