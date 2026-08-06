@@ -263,7 +263,6 @@ Use the navigation bar icon to switch between:
 | ----------------------- | ---------------------------------------------------- |
 | Frontend Development    | User interface, responsiveness, and dashboard design |
 | AI Integration          | Route optimization and parking allocation logic      |
-| Database & Backend      | Vehicle records and booking management               |
 | Testing & Documentation | Bug fixing, testing, and documentation               |
 
 ---
