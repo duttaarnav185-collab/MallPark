@@ -240,6 +240,34 @@ Use the navigation bar icon to switch between:
 ---
 
 <div align="center">
+# 👥 Team
+
+<div align="center">
+
+### Team Name: **Mall Mavericks**
+
+| Team Members | Branch                                             |
+| -----------  | -------------------------------------------------- |
+| Arnaav Dutta | Information Technology (IT)                      |
+| Sarang Joshi | Information Technology (IT)                       |                           |
+| Aryan Jaiswal| Information Technology (IT)                        |
+| Ayman Kazi   | Information Technology (IT)                        |
+
+</div>
+
+---
+
+### Roles & Responsibilities
+
+| Role                    | Responsibility                                       |
+| ----------------------- | ---------------------------------------------------- |
+| Frontend Development    | User interface, responsiveness, and dashboard design |
+| AI Integration          | Route optimization and parking allocation logic      |
+| Database & Backend      | Vehicle records and booking management               |
+| Testing & Documentation | Bug fixing, testing, and documentation               |
+
+---
+
 
 ### ⭐ If you like the project, consider giving it a star!
 
