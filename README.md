@@ -255,18 +255,6 @@ Use the navigation bar icon to switch between:
 
 </div>
 
----
-
-### Roles & Responsibilities
-
-| Role                    | Responsibility                                       |
-| ----------------------- | ---------------------------------------------------- |
-| Frontend Development    | User interface, responsiveness, and dashboard design |
-| AI Integration          | Route optimization and parking allocation logic      |
-| Testing & Documentation | Bug fixing, testing, and documentation               |
-
----
-
 
 ### ⭐ If you like the project, consider giving it a star!
 
