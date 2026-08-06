@@ -1,64 +1,248 @@
-MallPark Pro — Smart AI-Powered Mall Parking System
-MallPark Pro is an interactive, real-time web-based parking management dashboard designed for shopping centers and multi-level facilities. Built using modern web technologies, it features dynamic light/dark mode support, real-time AI route guidance, live vehicle activity simulation, dynamic peak-rate pricing, and simulated automated barrier gates.
+# 🚗 MallPark Pro – Smart AI-Powered Mall Parking System
 
-🚀 Features
-Dynamic Light & Dark Mode: Adapts the entire UI, including realistic asphalt driveways, parking slot cards, and control panels, to both light and dark themes.
+<div align="center">
 
-Interactive Floor Layout Toggle: The Available Slots metric card acts as a toggle button to reveal or collapse the interactive live parking floor map.
+### Intelligent • Automated • Real-Time Parking Management
 
-AI Navigation & Route Guidance: Visualized paths guide drivers from the entry gate directly to their designated parking slot.
+*An AI-powered parking management dashboard designed for shopping malls, commercial complexes, and multi-level parking facilities.*
 
-Multi-Floor Management: Seamlessly switch between Floor 1 (Ground Level), Floor 2 (Executive Level), and Floor 3 (Roof Level).
+</div>
 
-ANPR & Vehicle Search: Quick lookup via license plate numbers with built-in Indian standard plate format validation (MH12AB1234).
+---
 
-Automated Ticket & Receipt Generation: Generates dynamic digital QR code passes upon booking and itemized thermal receipts upon checkout.
+## 📌 Overview
 
-Real-time Activity Feed & Live Simulation: Background simulation of vehicles entering, exiting, and charging at EV stations, complete with an audit log.
+**MallPark Pro** is an interactive, real-time parking management system built using modern web technologies. The platform combines artificial intelligence, live vehicle monitoring, automated ticket generation, smart navigation, dynamic pricing, and real-time analytics to create a seamless parking experience.
 
-Emergency Corridor & Peak Hours Surcharge: Support for emergency clearance mode and dynamic 1.5x peak pricing surcharges.
+The project focuses on improving:
 
-Audio Feedback Engine: Web Audio API sound synthesizer providing interactive audio cues for clicks, success events, alarms, and gate movements.
+* Vehicle flow efficiency
+* Parking slot utilization
+* Driver convenience
+* Security and monitoring
+* Revenue optimization
 
-🛠️ Tech Stack
-Frontend: HTML5, CSS3, JavaScript (ES6+)
+---
 
-Styling & Design: Tailwind CSS (CDN with dynamic class dark mode), FontAwesome 6 Icons
+## ✨ Core Features
 
-Data Visualization: Chart.js (Doughnut Chart for slot distribution)
+### 🌗 Dynamic Light & Dark Mode
 
-API Utilities: QR Code Generator API for pass generation
+* Fully responsive interface
+* Adaptive parking layout design
+* Realistic asphalt road rendering
+* Theme-aware dashboards and controls
 
-Audio: Native Web Audio API (Synthesizer)
+---
 
-📁 Project Structure
-Plaintext
+### 🗺️ Interactive Smart Floor Layout
+
+* Real-time parking visualization
+* Expandable parking map
+* Interactive slot selection
+* Live occupancy tracking
+
+---
+
+### 🤖 AI Route Guidance System
+
+* Intelligent path generation
+* Entry-to-slot navigation
+* Animated route visualization
+* Traffic optimization
+
+---
+
+### 🏢 Multi-Floor Management
+
+Manage multiple parking levels effortlessly:
+
+* **Floor 1** – Ground Level
+* **Floor 2** – Executive Level
+* **Floor 3** – Roof Level
+
+---
+
+### 🚘 ANPR Vehicle Search
+
+* Number plate recognition support
+* Indian registration format validation
+* Fast vehicle lookup system
+
+**Supported format**
+
+```text
+MH12AB1234
+```
+
+---
+
+### 🎟️ Digital Ticketing System
+
+* QR code-based entry passes
+* Digital booking confirmation
+* Thermal receipt generation
+* Automated checkout process
+
+---
+
+### 📈 Live Activity Simulation
+
+* Vehicle entry and exit simulation
+* EV charging status tracking
+* Real-time event logging
+* Live activity feed
+
+---
+
+### 🚨 Emergency Mode & Dynamic Pricing
+
+* Emergency lane management
+* Peak-hour surcharge system
+* Automated pricing calculation
+
+---
+
+### 🔊 Audio Feedback System
+
+Powered by the **Web Audio API**.
+
+Supported sound effects:
+
+* Button clicks
+* Successful bookings
+* Barrier gate movement
+* Warning alerts
+* Notifications
+
+---
+
+# 🛠️ Technology Stack
+
+| Category | Technologies                   |
+| -------- | ------------------------------ |
+| Frontend | HTML5, CSS3, JavaScript (ES6+) |
+| Styling  | Tailwind CSS                   |
+| Icons    | Font Awesome 6                 |
+| Charts   | Chart.js                       |
+| APIs     | QR Code Generator API          |
+| Audio    | Web Audio API                  |
+
+---
+
+# 📂 Project Structure
+
+```plaintext
 mallpark-pro/
-├── index.html        # Monolithic single-page application (HTML, CSS, JavaScript)
-└── README.md         # Project documentation
-🚦 Getting Started
-Prerequisites
-No complex installation or build steps are required. All external libraries (Tailwind CSS, FontAwesome, Chart.js) are loaded via lightweight CDNs.
+│
+├── index.html          # Main application
+└── README.md           # Project documentation
+```
 
-Running the Application
-Clone or Download the repository:
+---
 
-Bash
+# 🚀 Getting Started
+
+## Prerequisites
+
+No installation or build process is required.
+
+External libraries are loaded directly from lightweight CDNs.
+
+---
+
+## Clone the Repository
+
+```bash
 git clone https://github.com/your-username/mallpark-pro.git
 cd mallpark-pro
-Open index.html in any web browser:
+```
 
-Double-click index.html in your file explorer, OR
+---
 
-Use a local dev server extension like VS Code Live Server.
+## Run the Application
 
-📖 How to Use
-View Live Layout: Click on the Available Slots card at the top to toggle the live smart parking layout display.
+Simply open:
 
-Book a Slot: Click on any empty slot card (e.g., F1-S01) to open the reservation modal, fill in driver details, and generate a QR ticket pass.
+```plaintext
+index.html
+```
 
-Find & Route Vehicle: Type a vehicle plate number into the search bar and click Find & Route. The system will switch to the appropriate floor and draw an animated AI guidance path.
+You can also run the project using:
 
-Checkout: Enter a plate number into the search bar and click Checkout to process exit gate opening and print an official thermal receipt.
+* VS Code Live Server
+* XAMPP
+* Any local development server
 
-Toggle Theme: Click the moon/sun icon in the top navigation bar to toggle between Light and Dark modes.
+---
+
+# 📖 User Guide
+
+### 🅿️ View Parking Layout
+
+Click the **Available Slots** card to display the smart parking map.
+
+---
+
+### 🎫 Reserve a Slot
+
+1. Select an empty parking slot.
+2. Enter driver information.
+3. Generate the QR-based parking pass.
+
+---
+
+### 🧭 Find & Route Vehicles
+
+1. Enter the vehicle number.
+2. Click **Find & Route**.
+3. Receive an AI-generated navigation path.
+
+---
+
+### 💳 Checkout
+
+1. Enter the vehicle registration number.
+2. Click **Checkout**.
+3. Generate a receipt and open the exit gate.
+
+---
+
+### 🌙 Switch Themes
+
+Use the navigation bar icon to switch between:
+
+* Light Mode ☀️
+* Dark Mode 🌙
+
+---
+
+# 🔮 Future Enhancements
+
+* Machine learning occupancy prediction
+* IoT sensor integration
+* Mobile application support
+* Cloud synchronization
+* Payment gateway integration
+* CCTV-based vehicle recognition
+
+---
+
+# 👨‍💻 Built With
+
+* HTML5
+* CSS3
+* JavaScript
+* Tailwind CSS
+* Chart.js
+* Font Awesome
+
+---
+
+<div align="center">
+
+### ⭐ If you like the project, consider giving it a star!
+
+**MallPark Pro — Making parking smarter, faster, and more efficient.**
+
+</div>
