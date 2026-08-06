@@ -244,7 +244,7 @@ Use the navigation bar icon to switch between:
 
 <div align="center">
 
-### Team Name: **The Renderers**
+### Team Name: **🔥The Renderers**
 
 | Team Members | Role                                               |
 | -----------  | -------------------------------------------------- |
