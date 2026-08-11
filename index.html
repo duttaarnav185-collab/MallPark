@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MallPark Pro - Smart AI-Powered Mall Parking System</title>
+    <!-- Google Fonts: Montserrat -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -11,7 +15,22 @@
             darkMode: 'class',
             theme: {
                 extend: {
-                    colors: { darkBg: '#0f172a', darkCard: '#1e293b' },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        mono: ['Montserrat', 'monospace']
+                    },
+                    colors: {
+                        darkBg: '#0b0f19',
+                        darkCard: '#111827',
+                        accent: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            900: '#064e3b'
+                        }
+                    },
                     animation: { 'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite' }
                 }
             }
@@ -21,9 +40,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* BACKGROUND IMAGE STYLING */
-        body { 
-            transition: background-color 0.3s, color 0.3s; 
+        * { font-family: 'Montserrat', sans-serif !important; }
+        .fa, .fas, .far, .fal, .fad, .fab, .fa-solid, .fa-regular, .fa-light, .fa-thin, .fa-duotone, .fa-brands {
+            font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+        }
+
+        body {
+            transition: background-color 0.3s, color 0.3s;
             background-image: url("https://images.unsplash.com/photo-1506521781263-d8422e82f27a");
             background-size: cover;
             background-position: center;
@@ -31,22 +54,19 @@
         }
 
         .slot-card { transition: all 0.25s ease-in-out; position: relative; }
-        .slot-card:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 20px -3px rgba(0, 0, 0, 0.2); }
-        .highlight-slot { border: 4px solid #3b82f6 !important; animation: bounce 1s infinite; z-index: 20; }
+        .slot-card:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 10px 20px -3px rgba(16, 185, 129, 0.25); }
+        .highlight-slot { border: 4px solid #10b981 !important; animation: bounce 1s infinite; z-index: 20; }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-        
-        /* Toggle Switch */
+       
         input:checked ~ .dot { transform: translateX(100%); background-color: #f43f5e; }
         input:checked ~ .block { background-color: #ffe4e6; }
         .dark input:checked ~ .block { background-color: #881337; }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         .dark ::-webkit-scrollbar-thumb { background: #334155; }
 
-        /* REALISTIC PARKING LOT STYLING WITH LIGHT & DARK MODE SUPPORT */
         .parking-layout-container {
             background: rgba(248, 250, 252, 0.95);
             backdrop-filter: blur(12px);
@@ -60,9 +80,9 @@
         }
 
         .dark .parking-layout-container {
-            background: rgba(30, 37, 48, 0.95);
+            background: rgba(17, 24, 39, 0.95);
             box-shadow: inset 0 0 25px rgba(0,0,0,0.8), 0 20px 25px -5px rgba(0, 0, 0, 0.3);
-            border-color: #334155;
+            border-color: #1f2937;
         }
 
         .asphalt-road {
@@ -76,8 +96,8 @@
         }
 
         .dark .asphalt-road {
-            background: #282e3a;
-            background-image: radial-gradient(#384252 15%, transparent 16%);
+            background: #1f2937;
+            background-image: radial-gradient(#374151 15%, transparent 16%);
             box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
         }
 
@@ -109,11 +129,10 @@
         }
 
         .dark .speed-bump {
-            background: repeating-linear-gradient(90deg, #f59e0b, #f59e0b 10px, #1e293b 10px, #1e293b 20px);
+            background: repeating-linear-gradient(90deg, #f59e0b, #f59e0b 10px, #111827 10px, #111827 20px);
             box-shadow: 0 2px 4px rgba(0,0,0,0.4);
         }
 
-        /* ANIMATED BARRIER GATES */
         .gate-arm {
             height: 6px;
             background: linear-gradient(90deg, #ef4444 0%, #ffffff 25%, #ef4444 50%, #ffffff 75%, #ef4444 100%);
@@ -123,32 +142,66 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
-        .gate-arm.open {
-            transform: rotate(-85deg);
-        }
+        .gate-arm.open { transform: rotate(-85deg); }
     </style>
 </head>
-<body class="bg-gray-900/60 text-gray-800 dark:text-gray-100 min-h-screen flex flex-col font-sans backdrop-blur-xs">
+<body class="bg-slate-950/70 text-gray-800 dark:text-gray-100 min-h-screen flex flex-col font-sans backdrop-blur-xs">
+
+    <!-- INITIAL ROLE SELECTION OVERLAY (SHOWS FIRST ON LOAD) -->
+    <div id="roleSelectionModal" class="fixed inset-0 bg-slate-950/95 backdrop-blur-xl z-50 flex items-center justify-center p-4">
+        <div class="max-w-2xl w-full text-center space-y-8">
+            <div>
+                <span class="text-xs bg-emerald-500/20 text-emerald-400 font-bold px-3 py-1.5 rounded-full uppercase tracking-widest border border-emerald-500/30">WELCOME TO MALLPARK PRO</span>
+                <h1 class="text-4xl md:text-5xl font-black text-white mt-4 tracking-tight">Select Portal Mode</h1>
+                <p class="text-gray-400 mt-2 text-sm">Please choose your user profile to load the customized interface</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Visitor Option -->
+                <button onclick="selectUserRole('visitor')" class="bg-slate-900/80 border border-emerald-500/30 hover:border-emerald-500 p-6 rounded-3xl text-left hover:bg-slate-800/80 transition group shadow-2xl">
+                    <div class="w-14 h-14 bg-emerald-500/10 text-emerald-400 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <h3 class="text-2xl font-black text-white mb-2">Mall Visitor</h3>
+                    <p class="text-xs text-gray-400 leading-relaxed">Book parking slots, get AI navigation routes to your vehicle, view floor availability, and pay digital tickets.</p>
+                </button>
+
+                <!-- Manager Option -->
+                <button onclick="selectUserRole('manager')" class="bg-slate-900/80 border border-teal-500/30 hover:border-teal-500 p-6 rounded-3xl text-left hover:bg-slate-800/80 transition group shadow-2xl">
+                    <div class="w-14 h-14 bg-teal-500/10 text-teal-400 rounded-2xl flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-user-gear"></i>
+                    </div>
+                    <h3 class="text-2xl font-black text-white mb-2">Park Manager</h3>
+                    <p class="text-xs text-gray-400 leading-relaxed">Access live slot distribution, activity logs, revenue metrics, emergency controls, and manual slot override tools.</p>
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Top Navigation Bar Header -->
-    <nav class="bg-indigo-600/90 dark:bg-indigo-900/90 backdrop-blur-md text-white p-4 shadow-xl relative z-40 transition-colors duration-300" id="mainNav">
+    <nav class="bg-gradient-to-r from-emerald-900/90 via-teal-900/90 to-slate-900/90 backdrop-blur-md text-white p-4 shadow-2xl relative z-40 transition-colors duration-300 border-b border-emerald-500/20" id="mainNav">
         <div class="max-w-7xl mx-auto flex justify-between items-center relative">
-            <div class="hidden sm:block w-32"></div>
+            <div class="flex items-center gap-2">
+                <button onclick="openRoleSelector()" class="bg-slate-900/80 hover:bg-slate-800 text-xs px-3 py-1.5 rounded-xl border border-emerald-500/30 flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left text-emerald-400"></i>
+                    <span id="currentRoleBadge" class="font-extrabold uppercase text-[10px] text-emerald-300">Select Mode</span>
+                </button>
+            </div>
 
             <!-- Brand Name -->
-            <div class="text-3xl md:text-4xl font-black tracking-wider mx-auto drop-shadow-md flex items-center">
-                <span class="bg-clip-text text-transparent bg-gradient-to-r from-white via-indigo-100 to-indigo-200">
-                    MallPark <span class="text-xs md:text-sm bg-gradient-to-r from-amber-400 to-orange-500 text-gray-900 font-extrabold px-3 py-1 rounded-full uppercase tracking-widest shadow align-middle ml-1">PRO</span>
+            <div class="text-2xl md:text-4xl font-black tracking-wider drop-shadow-md flex items-center">
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-white via-emerald-100 to-teal-200">
+                    MallPark <span class="text-xs md:text-sm bg-gradient-to-r from-emerald-400 to-teal-400 text-slate-950 font-extrabold px-3 py-1 rounded-full uppercase tracking-widest shadow align-middle ml-1">PRO</span>
                 </span>
             </div>
 
             <!-- Right Quick Controls -->
-            <div class="flex items-center gap-3 absolute right-0 top-0 sm:relative">
-                <button onclick="playSound('click'); toggleLiveSim();" id="simToggleBtn" class="bg-indigo-700/80 dark:bg-indigo-950/80 backdrop-blur-sm px-3 py-2 rounded-xl text-xs font-bold hover:bg-indigo-800 shadow flex items-center gap-2 border border-indigo-400/30">
+            <div class="flex items-center gap-3">
+                <button onclick="playSound('click'); toggleLiveSim();" id="simToggleBtn" class="bg-emerald-950/80 dark:bg-slate-900/80 backdrop-blur-sm px-3 py-2 rounded-xl text-xs font-bold hover:bg-emerald-900 shadow flex items-center gap-2 border border-emerald-500/30">
                     <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" id="simPing"></span>
                     <span id="simBtnText" class="hidden md:inline">Sim: Live</span>
                 </button>
-                <button id="themeToggle" class="bg-indigo-700/80 dark:bg-indigo-950/80 backdrop-blur-sm px-3.5 py-2 rounded-xl text-sm font-medium hover:bg-indigo-800 shadow border border-indigo-400/30">
+                <button id="themeToggle" class="bg-emerald-950/80 dark:bg-slate-900/80 backdrop-blur-sm px-3.5 py-2 rounded-xl text-sm font-medium hover:bg-emerald-900 shadow border border-emerald-500/30">
                     <i class="fa-solid fa-moon"></i>
                 </button>
             </div>
@@ -158,19 +211,19 @@
     <!-- Main Dashboard Area -->
     <main class="flex-grow p-4 md:p-6 max-w-7xl mx-auto w-full space-y-6">
 
-        <!-- SEARCH BAR & ACTION BUTTONS (Shifted Below Header) -->
-        <div class="bg-white/90 dark:bg-darkCard/90 backdrop-blur-md p-4 rounded-2xl shadow border border-white/20">
+        <!-- SEARCH BAR & ACTION BUTTONS -->
+        <div class="bg-white/90 dark:bg-darkCard/90 backdrop-blur-md p-4 rounded-2xl shadow-xl border border-emerald-500/10">
             <div class="max-w-3xl mx-auto flex flex-col sm:flex-row gap-2">
                 <div class="relative flex-grow">
-                    <input type="text" id="findCarInput" placeholder="Enter Vehicle Plate (e.g. MH12AB1234)" 
+                    <input type="text" id="findCarInput" placeholder="Enter Vehicle Plate (e.g. MH12AB1234)"
                            oninput="validatePlateInput(this)"
-                           class="w-full py-2.5 pl-10 pr-4 rounded-xl text-gray-800 dark:text-gray-100 dark:bg-gray-800 border dark:border-gray-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 shadow-inner uppercase font-mono font-bold text-sm bg-white/95">
+                           class="w-full py-2.5 pl-10 pr-4 rounded-xl text-gray-800 dark:text-gray-100 dark:bg-gray-800 border dark:border-gray-700 focus:outline-none focus:ring-4 focus:ring-emerald-400/30 shadow-inner uppercase font-mono font-bold text-sm bg-white/95">
                     <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-gray-400"></i>
                 </div>
-                <button onclick="playSound('click'); findMyCar();" class="bg-blue-500 hover:bg-blue-600 text-white text-sm font-bold px-5 py-2.5 rounded-xl shadow transition flex items-center justify-center gap-1.5">
+                <button onclick="playSound('click'); findMyCar();" class="bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-bold px-5 py-2.5 rounded-xl shadow-lg shadow-emerald-600/30 transition flex items-center justify-center gap-1.5">
                     <i class="fa-solid fa-location-arrow text-xs"></i> <span>Find & Route</span>
                 </button>
-                <button onclick="checkoutCar()" class="bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-bold px-5 py-2.5 rounded-xl shadow transition flex items-center justify-center gap-1.5">
+                <button onclick="checkoutCar()" class="bg-teal-600 hover:bg-teal-500 text-white text-sm font-bold px-5 py-2.5 rounded-xl shadow-lg shadow-teal-600/30 transition flex items-center justify-center gap-1.5">
                     <i class="fa-solid fa-right-from-bracket text-xs"></i> <span>Checkout</span>
                 </button>
             </div>
@@ -186,19 +239,28 @@
         </div>
 
         <!-- Top Analytics Bar -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="bg-white/90 dark:bg-darkCard/90 backdrop-blur-md p-5 rounded-2xl shadow flex items-center space-x-5 border border-white/20">
-                <div class="p-4 bg-blue-100 text-blue-600 dark:bg-blue-900/50 rounded-2xl"><i class="fa-solid fa-layer-group text-3xl"></i></div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="bg-white/90 dark:bg-darkCard/90 backdrop-blur-md p-5 rounded-2xl shadow-lg flex items-center space-x-5 border border-emerald-500/10">
+                <div class="p-4 bg-emerald-100 text-emerald-600 dark:bg-emerald-950/60 rounded-2xl"><i class="fa-solid fa-layer-group text-3xl"></i></div>
                 <div>
                     <div class="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider">Total Parking Capacity</div>
                     <div class="text-3xl font-black">60 Slots (3 Floors)</div>
                 </div>
             </div>
-            <div class="bg-white/90 dark:bg-darkCard/90 backdrop-blur-md p-5 rounded-2xl shadow flex items-center space-x-5 border border-white/20">
-                <div class="p-4 bg-emerald-100 text-emerald-600 dark:bg-emerald-900/50 rounded-2xl"><i class="fa-solid fa-circle-check text-3xl"></i></div>
+            <div class="bg-white/90 dark:bg-darkCard/90 backdrop-blur-md p-5 rounded-2xl shadow-lg flex items-center space-x-5 border border-emerald-500/10">
+                <div class="p-4 bg-teal-100 text-teal-600 dark:bg-teal-950/60 rounded-2xl"><i class="fa-solid fa-circle-check text-3xl"></i></div>
                 <div>
                     <div class="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider">Available Slots</div>
-                    <div id="statAvailable" class="text-3xl font-black text-emerald-600 dark:text-emerald-400">0</div>
+                    <div id="statAvailable" class="text-3xl font-black text-emerald-500 dark:text-emerald-400">0</div>
+                </div>
+            </div>
+
+            <!-- MANAGER EXCLUSIVE: Revenue Analytics Card -->
+            <div id="managerRevenueCard" class="hidden bg-white/90 dark:bg-darkCard/90 backdrop-blur-md p-5 rounded-2xl shadow-lg border border-emerald-500/10 flex items-center space-x-5">
+                <div class="p-4 bg-amber-100 text-amber-600 dark:bg-amber-950/60 rounded-2xl"><i class="fa-solid fa-indian-rupee-sign text-3xl"></i></div>
+                <div>
+                    <div class="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider">Est. Realtime Revenue</div>
+                    <div id="statRevenue" class="text-3xl font-black text-amber-500">₹0</div>
                 </div>
             </div>
         </div>
@@ -206,18 +268,18 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
             <!-- LEFT SIDEBAR -->
-            <div class="lg:col-span-4 space-y-6">
-                
+            <div id="sidebarColumn" class="lg:col-span-4 space-y-6">
+               
                 <!-- Controls -->
-                <div class="bg-white/90 dark:bg-darkCard/90 backdrop-blur-md p-5 rounded-2xl shadow border border-white/20">
-                    <div class="flex justify-between items-center mb-4 border-b border-gray-100 dark:border-gray-700 pb-2">
-                        <h2 class="text-lg font-bold"><i class="fa-solid fa-sliders text-indigo-500 mr-2"></i> Controls</h2>
-                        
-                        <!-- Peak Surcharge Toggle -->
-                        <label class="flex items-center cursor-pointer">
+                <div class="bg-white/90 dark:bg-darkCard/90 backdrop-blur-md p-5 rounded-2xl shadow-lg border border-emerald-500/10">
+                    <div class="flex justify-between items-center mb-4 border-b border-gray-100 dark:border-gray-800 pb-2">
+                        <h2 class="text-lg font-bold"><i class="fa-solid fa-sliders text-emerald-500 mr-2"></i> Controls</h2>
+                       
+                        <!-- Peak Surcharge Toggle (Manager Only) -->
+                        <label id="peakToggleContainer" class="flex items-center cursor-pointer">
                             <div class="relative">
                                 <input type="checkbox" id="peakToggle" class="sr-only" onchange="playSound('click'); togglePeakHours();">
-                                <div class="block bg-gray-300 dark:bg-gray-600 w-10 h-6 rounded-full transition"></div>
+                                <div class="block bg-gray-300 dark:bg-gray-700 w-10 h-6 rounded-full transition"></div>
                                 <div class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition transform"></div>
                             </div>
                             <span class="ml-2 text-[10px] font-bold text-rose-500 uppercase flex items-center">
@@ -229,7 +291,7 @@
                     <div class="space-y-4">
                         <div>
                             <label class="block text-xs font-bold uppercase text-gray-500 dark:text-gray-400 mb-1">Select Floor</label>
-                            <select id="floorSelect" class="w-full p-2.5 border rounded-xl dark:bg-gray-800 dark:border-gray-700 font-semibold text-sm">
+                            <select id="floorSelect" class="w-full p-2.5 border rounded-xl dark:bg-gray-800 dark:border-gray-700 font-semibold text-sm focus:ring-2 focus:ring-emerald-500">
                                 <option value="1">Floor 1 (Ground Level)</option>
                                 <option value="2">Floor 2 (Executive Level)</option>
                                 <option value="3">Floor 3 (Roof Level)</option>
@@ -237,7 +299,7 @@
                         </div>
                         <div>
                             <label class="block text-xs font-bold uppercase text-gray-500 dark:text-gray-400 mb-1">Vehicle Filter</label>
-                            <select id="typeSelect" class="w-full p-2.5 border rounded-xl dark:bg-gray-800 dark:border-gray-700 font-semibold text-sm">
+                            <select id="typeSelect" class="w-full p-2.5 border rounded-xl dark:bg-gray-800 dark:border-gray-700 font-semibold text-sm focus:ring-2 focus:ring-emerald-500">
                                 <option value="all">All Vehicle Types</option>
                                 <option value="pwd">♿ Accessible / PWD (₹30/hr)</option>
                                 <option value="car">🚗 Four Wheeler / Cars (₹50/hr)</option>
@@ -245,37 +307,49 @@
                                 <option value="ev">⚡ EV Charging Station (₹80/hr)</option>
                             </select>
                         </div>
-                        
-                        <button onclick="toggleEmergencyMode()" class="w-full py-2 bg-rose-100 hover:bg-rose-200 text-rose-700 dark:bg-rose-950/50 dark:text-rose-300 rounded-xl text-xs font-extrabold flex items-center justify-center gap-2 border border-rose-300">
+                       
+                        <!-- Emergency Control (Manager Only) -->
+                        <button id="btnEmergencyMode" onclick="toggleEmergencyMode()" class="w-full py-2 bg-rose-100 hover:bg-rose-200 text-rose-700 dark:bg-rose-950/50 dark:text-rose-300 rounded-xl text-xs font-extrabold flex items-center justify-center gap-2 border border-rose-300">
                             <i class="fa-solid fa-bullhorn"></i> Emergency Corridor Mode
                         </button>
                     </div>
                 </div>
 
-                <!-- Distribution Chart -->
-                <div class="bg-white/90 dark:bg-darkCard/90 backdrop-blur-md p-5 rounded-2xl shadow border border-white/20">
+                <!-- MANAGER EXCLUSIVE: System Diagnostics & Manual Slot Tools -->
+                <div id="managerToolsCard" class="hidden bg-white/90 dark:bg-darkCard/90 backdrop-blur-md p-5 rounded-2xl shadow-lg border border-emerald-500/10 space-y-3">
+                    <h3 class="text-xs font-bold uppercase text-gray-500 dark:text-gray-400 mb-2"><i class="fa-solid fa-gears text-teal-500 mr-1"></i> Manager Quick Actions</h3>
+                    <button onclick="triggerSystemAudit()" class="w-full py-2 bg-teal-50 hover:bg-teal-100 text-teal-800 dark:bg-teal-950/50 dark:text-teal-300 rounded-xl text-xs font-bold border border-teal-300 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-stethoscope"></i> Run ANPR System Diagnostic
+                    </button>
+                    <button onclick="openManualOverrideModal()" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 dark:bg-slate-800 dark:text-slate-200 rounded-xl text-xs font-bold border border-slate-300 dark:border-slate-700 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-wrench"></i> Manual Slot Override
+                    </button>
+                </div>
+
+                <!-- MANAGER EXCLUSIVE: Distribution Chart -->
+                <div id="managerChartCard" class="hidden bg-white/90 dark:bg-darkCard/90 backdrop-blur-md p-5 rounded-2xl shadow-lg border border-emerald-500/10">
                     <h3 class="text-xs font-bold uppercase text-gray-500 dark:text-gray-400 mb-3 flex justify-between">
-                        <span><i class="fa-solid fa-chart-pie text-indigo-500 mr-1"></i> Slot Distribution</span>
-                        <span id="occupancyRateTag" class="text-indigo-600 dark:text-indigo-400 font-extrabold">0% Occupied</span>
+                        <span><i class="fa-solid fa-chart-pie text-emerald-500 mr-1"></i> Slot Distribution</span>
+                        <span id="occupancyRateTag" class="text-emerald-500 dark:text-emerald-400 font-extrabold">0% Occupied</span>
                     </h3>
                     <div class="h-44"><canvas id="pieChart"></canvas></div>
                 </div>
 
-                <!-- Activity Feed -->
-                <div class="bg-white/90 dark:bg-darkCard/90 backdrop-blur-md p-5 rounded-2xl shadow border border-white/20">
+                <!-- MANAGER EXCLUSIVE: Activity Feed -->
+                <div id="managerFeedCard" class="hidden bg-white/90 dark:bg-darkCard/90 backdrop-blur-md p-5 rounded-2xl shadow-lg border border-emerald-500/10">
                     <h3 class="text-xs font-bold uppercase text-gray-500 dark:text-gray-400 mb-3 flex items-center gap-2">
-                        <i class="fa-solid fa-rss text-emerald-500 animate-pulse"></i> Real-time Activity Feed
+                        <i class="fa-solid fa-rss text-teal-500 animate-pulse"></i> Real-time Activity Feed
                     </h3>
                     <div id="activityFeed" class="space-y-2 text-xs h-32 overflow-y-auto pr-1">
                         <div class="text-gray-400 italic text-center py-4">Awaiting vehicle entry/exit activity...</div>
                     </div>
                 </div>
 
-                <!-- Active Reservations -->
-                <div class="bg-white/90 dark:bg-darkCard/90 backdrop-blur-md p-5 rounded-2xl shadow border border-white/20 flex flex-col h-72">
-                    <div class="flex justify-between items-center mb-3 border-b border-gray-100 dark:border-gray-700 pb-2">
-                        <h2 class="text-sm font-bold uppercase text-gray-500 dark:text-gray-400"><i class="fa-solid fa-receipt text-indigo-500 mr-1"></i> Active Reservations</h2>
-                        <button onclick="playSound('gate'); simulateTimeLeap();" class="text-[10px] bg-amber-100 text-amber-800 hover:bg-amber-200 px-2 py-1 rounded font-bold transition flex items-center">
+                <!-- Active Reservations (Visible to Both) -->
+                <div class="bg-white/90 dark:bg-darkCard/90 backdrop-blur-md p-5 rounded-2xl shadow-lg border border-emerald-500/10 flex flex-col h-72">
+                    <div class="flex justify-between items-center mb-3 border-b border-gray-100 dark:border-gray-800 pb-2">
+                        <h2 class="text-sm font-bold uppercase text-gray-500 dark:text-gray-400"><i class="fa-solid fa-receipt text-emerald-500 mr-1"></i> Active Reservations</h2>
+                        <button id="btnFastForward" onclick="playSound('gate'); simulateTimeLeap();" class="text-[10px] bg-amber-100 text-amber-800 hover:bg-amber-200 px-2 py-1 rounded font-bold transition flex items-center">
                             <i class="fa-solid fa-forward mr-1"></i> Fast-Forward Time
                         </button>
                     </div>
@@ -284,22 +358,22 @@
             </div>
 
             <!-- RIGHT MAIN: Realistic Parking Lot & AI Route Map -->
-            <div class="lg:col-span-8 bg-white/90 dark:bg-darkCard/90 backdrop-blur-md p-6 rounded-2xl shadow border border-white/20 flex flex-col">
-                
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 border-b border-gray-100 dark:border-gray-700 pb-4">
+            <div id="layoutColumn" class="lg:col-span-8 bg-white/90 dark:bg-darkCard/90 backdrop-blur-md p-6 rounded-2xl shadow-lg border border-emerald-500/10 flex flex-col">
+               
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 border-b border-gray-100 dark:border-gray-800 pb-4">
                     <div>
                         <h2 class="text-2xl font-black tracking-tight flex items-center gap-2">
                             <span>Smart Parking Layout</span>
-                            <span id="aiBadge" class="hidden text-xs bg-blue-600 text-white font-extrabold px-2.5 py-1 rounded-full animate-bounce">
+                            <span id="aiBadge" class="hidden text-xs bg-emerald-600 text-white font-extrabold px-2.5 py-1 rounded-full animate-bounce">
                                 <i class="fa-solid fa-robot mr-1"></i> AI Route Active
                             </span>
                         </h2>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Viewing Floor: <span id="currentFloorName" class="font-bold text-indigo-600 dark:text-indigo-400">Floor 1</span></p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">Viewing Floor: <span id="currentFloorName" class="font-bold text-emerald-500 dark:text-emerald-400">Floor 1</span></p>
                     </div>
 
                     <!-- Floor Switcher -->
                     <div class="flex items-center gap-1 bg-gray-100 dark:bg-gray-800 p-1 rounded-xl text-xs font-bold">
-                        <button onclick="playSound('click'); switchFloor(1);" id="btnFloor1" class="px-3 py-1.5 rounded-lg transition bg-indigo-600 text-white">F1 (Ground)</button>
+                        <button onclick="playSound('click'); switchFloor(1);" id="btnFloor1" class="px-3 py-1.5 rounded-lg transition bg-emerald-600 text-white shadow-md">F1 (Ground)</button>
                         <button onclick="playSound('click'); switchFloor(2);" id="btnFloor2" class="px-3 py-1.5 rounded-lg transition text-gray-600 dark:text-gray-300">F2 (Exec)</button>
                         <button onclick="playSound('click'); switchFloor(3);" id="btnFloor3" class="px-3 py-1.5 rounded-lg transition text-gray-600 dark:text-gray-300">F3 (Roof)</button>
                     </div>
@@ -320,38 +394,35 @@
 
                 <!-- REALISTIC PARKING LOT LAYOUT CONTAINER -->
                 <div class="parking-layout-container flex flex-col gap-3 relative" id="layoutContainer">
-                    
-                    <!-- Dynamic Overlay for AI Route Guidance Lines -->
+                   
                     <svg id="routeSvg" class="absolute inset-0 w-full h-full pointer-events-none z-30" style="min-height: 100%;">
                         <defs>
                             <linearGradient id="routeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#3b82f6" />
-                                <stop offset="100%" stop-color="#60a5fa" />
+                                <stop offset="0%" stop-color="#10b981" />
+                                <stop offset="100%" stop-color="#14b8a6" />
                             </linearGradient>
                             <marker id="arrowhead" markerWidth="6" markerHeight="6" refX="4" refY="3" orient="auto">
-                                <polygon points="0 0, 6 3, 0 6" fill="#3b82f6" />
+                                <polygon points="0 0, 6 3, 0 6" fill="#10b981" />
                             </marker>
                         </defs>
                         <path id="routePath" d="" fill="none" stroke="url(#routeGrad)" stroke-width="6" stroke-linecap="round" stroke-dasharray="8,8" marker-end="url(#arrowhead)" class="animate-pulse" />
                     </svg>
 
                     <!-- TOP SECTION: ENTRY GATE & DRIVEWAY -->
-                    <div class="flex items-center justify-between bg-slate-200 dark:bg-slate-900 text-gray-800 dark:text-white p-3 rounded-xl border border-slate-300 dark:border-slate-700 shadow relative z-20">
-                        <!-- Animated Entry Gate -->
+                    <div class="flex items-center justify-between bg-slate-200 dark:bg-slate-900 text-gray-800 dark:text-white p-3 rounded-xl border border-slate-300 dark:border-slate-800 shadow relative z-20">
                         <div class="flex items-center gap-3">
                             <div class="flex flex-col items-center">
                                 <div class="text-[9px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-0.5">Entry Gate 1</div>
-                                <div class="w-10 h-7 bg-slate-300 dark:bg-slate-800 rounded border border-slate-400 dark:border-slate-600 flex items-center justify-center relative">
+                                <div class="w-10 h-7 bg-slate-300 dark:bg-slate-800 rounded border border-slate-400 dark:border-slate-700 flex items-center justify-center relative">
                                     <div id="entryGateArm" class="gate-arm w-12 absolute left-1"></div>
                                     <i class="fa-solid fa-traffic-light text-xs text-amber-500 dark:text-amber-400"></i>
                                 </div>
                             </div>
-                            <button onclick="triggerGateAnimation('entry')" class="text-[10px] bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1.5 rounded-lg font-bold shadow">
+                            <button onclick="triggerGateAnimation('entry')" class="text-[10px] bg-emerald-600 hover:bg-emerald-500 text-white px-2.5 py-1.5 rounded-lg font-bold shadow">
                                 <i class="fa-solid fa-door-open mr-1"></i> Test Entry Gate
                             </button>
                         </div>
 
-                        <!-- Speed Bump & Pedestrian Crossing -->
                         <div class="flex items-center gap-3">
                             <div class="zebra-crossing rounded"></div>
                             <div class="text-xs text-gray-600 dark:text-gray-400 font-bold uppercase hidden md:inline"><i class="fa-solid fa-person-walking text-amber-500 mr-1"></i> Pedestrian Zone</div>
@@ -362,11 +433,11 @@
                     <div id="parkingGridTop" class="grid grid-cols-2 sm:grid-cols-5 gap-3 relative z-10"></div>
 
                     <!-- CENTRAL ROAD & DRIVEWAY -->
-                    <div class="asphalt-road h-16 flex items-center justify-between px-6 border-y-2 border-slate-300 dark:border-slate-600 my-1 relative z-10" id="centralRoad">
+                    <div class="asphalt-road h-16 flex items-center justify-between px-6 border-y-2 border-slate-300 dark:border-slate-700 my-1 relative z-10" id="centralRoad">
                         <div class="road-lane-line"></div>
                         <div class="speed-bump w-16"></div>
                         <div class="text-slate-600 dark:text-slate-400 text-xs font-black tracking-widest flex items-center gap-2 z-10 bg-slate-100/90 dark:bg-slate-900/80 px-3 py-1 rounded-full border border-slate-300 dark:border-slate-700">
-                            <i class="fa-solid fa-arrow-right text-emerald-600 dark:text-emerald-400 animate-pulse"></i> ONE WAY DRIVEWAY
+                            <i class="fa-solid fa-arrow-right text-emerald-500 animate-pulse"></i> ONE WAY DRIVEWAY
                         </div>
                         <div class="speed-bump w-16"></div>
                     </div>
@@ -375,19 +446,18 @@
                     <div id="parkingGridBottom" class="grid grid-cols-2 sm:grid-cols-5 gap-3 relative z-10"></div>
 
                     <!-- BOTTOM SECTION: EXIT GATE & DRIVEWAY -->
-                    <div class="flex items-center justify-between bg-slate-200 dark:bg-slate-900 text-gray-800 dark:text-white p-3 rounded-xl border border-slate-300 dark:border-slate-700 shadow relative z-20">
+                    <div class="flex items-center justify-between bg-slate-200 dark:bg-slate-900 text-gray-800 dark:text-white p-3 rounded-xl border border-slate-300 dark:border-slate-800 shadow relative z-20">
                         <div class="text-xs text-gray-600 dark:text-gray-400 font-bold uppercase flex items-center">
-                            <i class="fa-solid fa-shield-halved text-blue-500 dark:text-blue-400 mr-2"></i> Automatic Number Plate Recognition (ANPR) Active
+                            <i class="fa-solid fa-shield-halved text-emerald-500 mr-2"></i> Automatic Number Plate Recognition (ANPR) Active
                         </div>
 
-                        <!-- Animated Exit Gate -->
                         <div class="flex items-center gap-3">
-                            <button onclick="triggerGateAnimation('exit')" class="text-[10px] bg-rose-600 hover:bg-rose-700 text-white px-2.5 py-1.5 rounded-lg font-bold shadow">
+                            <button onclick="triggerGateAnimation('exit')" class="text-[10px] bg-rose-600 hover:bg-rose-500 text-white px-2.5 py-1.5 rounded-lg font-bold shadow">
                                 <i class="fa-solid fa-door-open mr-1"></i> Test Exit Gate
                             </button>
                             <div class="flex flex-col items-center">
                                 <div class="text-[9px] font-black text-rose-600 dark:text-rose-400 uppercase tracking-widest mb-0.5">Exit Gate 1</div>
-                                <div class="w-10 h-7 bg-slate-300 dark:bg-slate-800 rounded border border-slate-400 dark:border-slate-600 flex items-center justify-center relative">
+                                <div class="w-10 h-7 bg-slate-300 dark:bg-slate-800 rounded border border-slate-400 dark:border-slate-700 flex items-center justify-center relative">
                                     <div id="exitGateArm" class="gate-arm w-12 absolute left-1"></div>
                                     <i class="fa-solid fa-traffic-light text-xs text-emerald-500 dark:text-emerald-400"></i>
                                 </div>
@@ -401,11 +471,31 @@
         </div>
     </main>
 
+    <!-- MODAL: Manager Manual Slot Override -->
+    <div id="managerOverrideModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-darkCard rounded-3xl max-w-md w-full p-6 shadow-2xl border border-emerald-500/20">
+            <div class="flex justify-between items-center border-b dark:border-gray-800 pb-3 mb-4">
+                <h3 class="text-xl font-bold">Manual Slot Control</h3>
+                <button onclick="closeOverrideModal()" class="text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Enter Target Slot ID (e.g. F1-S01)</label>
+                    <input type="text" id="overrideSlotIdInput" placeholder="F1-S01" class="w-full p-2.5 border rounded-xl dark:bg-gray-800 dark:border-gray-700 uppercase font-bold text-sm">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="applySlotOverride('maintenance')" class="py-2.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-xl text-xs">Mark Maintenance</button>
+                    <button onclick="applySlotOverride('clear')" class="py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs">Force Clear Slot</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- MODAL 1: Reservation Window -->
     <div id="bookingModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-darkCard rounded-3xl max-w-md w-full p-6 shadow-2xl transform transition-all">
-            <div class="flex justify-between items-center border-b dark:border-gray-700 pb-3 mb-4">
-                <h3 class="text-xl font-bold">Reserve Parking Slot <span id="modalSlotId" class="text-indigo-600 font-black"></span></h3>
+        <div class="bg-white dark:bg-darkCard rounded-3xl max-w-md w-full p-6 shadow-2xl transform transition-all border border-emerald-500/20">
+            <div class="flex justify-between items-center border-b dark:border-gray-800 pb-3 mb-4">
+                <h3 class="text-xl font-bold">Reserve Parking Slot <span id="modalSlotId" class="text-emerald-500 font-black"></span></h3>
                 <button onclick="playSound('click'); closeModal();" class="text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
             </div>
 
@@ -413,16 +503,16 @@
                 <input type="hidden" id="modalSlotIndex">
                 <div>
                     <label class="block text-xs font-bold uppercase text-gray-500 mb-1">Driver Full Name</label>
-                    <input type="text" id="custName" required placeholder="e.g. Rahul Sharma" class="w-full p-2.5 border rounded-xl dark:bg-gray-800 dark:border-gray-700 text-sm font-semibold">
+                    <input type="text" id="custName" required placeholder="e.g. Rahul Sharma" class="w-full p-2.5 border rounded-xl dark:bg-gray-800 dark:border-gray-700 text-sm font-semibold focus:ring-2 focus:ring-emerald-500">
                 </div>
                 <div>
                     <div class="flex justify-between items-center mb-1">
                         <label class="block text-xs font-bold uppercase text-gray-500">Vehicle License Plate</label>
                         <span id="plateValidationMsg" class="text-[10px] font-bold text-gray-400">Indian Standard (MH12AB1234)</span>
                     </div>
-                    <input type="text" id="custPlate" required placeholder="MH12AB1234" 
+                    <input type="text" id="custPlate" required placeholder="MH12AB1234"
                            oninput="validatePlateInput(this)"
-                           class="w-full p-2.5 border rounded-xl dark:bg-gray-800 dark:border-gray-700 uppercase font-mono font-bold text-sm tracking-widest">
+                           class="w-full p-2.5 border rounded-xl dark:bg-gray-800 dark:border-gray-700 uppercase font-mono font-bold text-sm tracking-widest focus:ring-2 focus:ring-emerald-500">
                 </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
@@ -435,16 +525,16 @@
                     </div>
                 </div>
 
-                <div class="bg-indigo-50 dark:bg-indigo-950 p-4 rounded-2xl border border-indigo-100 dark:border-indigo-900 flex justify-between items-center relative overflow-hidden">
+                <div class="bg-emerald-50 dark:bg-emerald-950/40 p-4 rounded-2xl border border-emerald-200 dark:border-emerald-800 flex justify-between items-center relative overflow-hidden">
                     <div id="peakWarning" class="absolute top-0 left-0 w-full bg-rose-500 text-white text-[9px] font-extrabold text-center uppercase py-0.5 hidden">Peak Dynamic Surcharge Active (1.5x)</div>
                     <div class="mt-2">
-                        <div class="text-xs text-indigo-600 dark:text-indigo-400 font-bold">Estimated Cost</div>
+                        <div class="text-xs text-emerald-600 dark:text-emerald-400 font-bold">Estimated Cost</div>
                         <div id="modalHourlyRate" class="text-[11px] text-gray-500">Rate: ₹50/hr</div>
                     </div>
-                    <div id="modalTotalCharge" class="text-2xl font-black text-indigo-600 dark:text-indigo-300">₹100</div>
+                    <div id="modalTotalCharge" class="text-2xl font-black text-emerald-600 dark:text-emerald-400">₹100</div>
                 </div>
 
-                <button type="submit" id="btnConfirmPay" class="w-full py-3 rounded-xl bg-indigo-600 text-white font-extrabold hover:bg-indigo-700 shadow-lg transition">Confirm & Issue Pass</button>
+                <button type="submit" id="btnConfirmPay" class="w-full py-3 rounded-xl bg-emerald-600 text-white font-extrabold hover:bg-emerald-500 shadow-lg shadow-emerald-600/30 transition">Confirm & Issue Pass</button>
             </form>
         </div>
     </div>
@@ -455,33 +545,33 @@
             <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3 text-2xl font-bold">✓</div>
             <h2 class="text-2xl font-black text-gray-800 dark:text-white">Pass Generated!</h2>
             <p class="text-xs text-gray-500 mb-4">Scan QR code at the gate scanner to enter.</p>
-            
+           
             <div class="bg-white p-3 rounded-2xl inline-block shadow-inner mb-4 border">
                 <img id="qrImage" src="" alt="QR Gate Pass" class="w-36 h-36 mx-auto">
             </div>
 
-            <div class="bg-gray-50 dark:bg-gray-900 rounded-2xl p-4 text-left border dark:border-gray-700 space-y-2 text-xs">
-                <div class="flex justify-between border-b dark:border-gray-700 pb-1">
+            <div class="bg-gray-50 dark:bg-gray-900 rounded-2xl p-4 text-left border dark:border-gray-800 space-y-2 text-xs">
+                <div class="flex justify-between border-b dark:border-gray-800 pb-1">
                     <span class="text-gray-500 font-bold uppercase">Slot Assigned</span>
-                    <span class="font-black text-indigo-600" id="ticketSlot"></span>
+                    <span class="font-black text-emerald-500" id="ticketSlot"></span>
                 </div>
-                <div class="flex justify-between border-b dark:border-gray-700 pb-1">
+                <div class="flex justify-between border-b dark:border-gray-800 pb-1">
                     <span class="text-gray-500 font-bold uppercase">Plate Number</span>
                     <span class="font-bold font-mono" id="ticketPlate"></span>
                 </div>
                 <div class="flex justify-between">
                     <span class="text-gray-500 font-bold uppercase">Total Fee</span>
-                    <span class="font-extrabold text-emerald-600" id="ticketAmount"></span>
+                    <span class="font-extrabold text-emerald-500" id="ticketAmount"></span>
                 </div>
             </div>
-            
-            <button onclick="playSound('click'); closeTicket();" class="w-full mt-5 py-2.5 rounded-xl bg-gray-900 text-white dark:bg-gray-700 font-bold hover:bg-gray-800 transition text-sm">Done & Show Route</button>
+           
+            <button onclick="playSound('click'); closeTicket();" class="w-full mt-5 py-2.5 rounded-xl bg-gray-900 text-white dark:bg-gray-800 font-bold hover:bg-gray-800 transition text-sm">Done & Show Route</button>
         </div>
     </div>
 
     <!-- MODAL 3: Checkout Thermal Receipt -->
     <div id="receiptModal" class="fixed inset-0 bg-black/70 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white text-gray-800 rounded-2xl max-w-sm w-full p-6 shadow-2xl font-mono text-xs border-t-8 border-indigo-600">
+        <div class="bg-white text-gray-800 rounded-2xl max-w-sm w-full p-6 shadow-2xl font-mono text-xs border-t-8 border-teal-600">
             <div class="text-center pb-3 border-b border-dashed border-gray-400">
                 <h3 class="text-lg font-black uppercase tracking-widest">MallPark Pro</h3>
                 <p class="text-[10px] text-gray-500">Official Parking Receipt</p>
@@ -496,26 +586,27 @@
             </div>
             <div class="text-center pt-2 border-t border-dashed border-gray-400">
                 <p class="text-[10px] text-gray-400">Thank you for visiting MallPark!</p>
-                <button onclick="playSound('click'); closeReceipt();" class="mt-4 w-full bg-indigo-600 text-white py-2 rounded-xl font-sans font-bold text-sm">Close Receipt</button>
+                <button onclick="playSound('click'); closeReceipt();" class="mt-4 w-full bg-teal-600 text-white py-2 rounded-xl font-sans font-bold text-sm hover:bg-teal-500">Close Receipt</button>
             </div>
         </div>
     </div>
 
     <!-- APPLICATION LOGIC -->
     <script>
-        // WEB AUDIO API SOUND SYNTHESIZER
+        if (window.Chart) {
+            Chart.defaults.font.family = 'Montserrat, sans-serif';
+        }
+
         let audioCtx = null;
+        let currentUserRole = null;
+        let totalSystemRevenue = 1250;
 
         function initAudio() {
             if (!audioCtx) {
                 const AudioContext = window.AudioContext || window.webkitAudioContext;
-                if (AudioContext) {
-                    audioCtx = new AudioContext();
-                }
+                if (AudioContext) audioCtx = new AudioContext();
             }
-            if (audioCtx && audioCtx.state === 'suspended') {
-                audioCtx.resume();
-            }
+            if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
         }
 
         function playSound(type = 'click') {
@@ -531,7 +622,6 @@
                 gain.connect(audioCtx.destination);
 
                 if (type === 'click') {
-                    // Crisp, subtle button click sound
                     osc.type = 'sine';
                     osc.frequency.setValueAtTime(800, now);
                     osc.frequency.exponentialRampToValueAtTime(400, now + 0.05);
@@ -540,19 +630,18 @@
                     osc.start(now);
                     osc.stop(now + 0.05);
                 } else if (type === 'success') {
-                    // Upbeat multi-tone chime for booking/checkout
                     const osc2 = audioCtx.createOscillator();
                     const gain2 = audioCtx.createGain();
                     osc2.connect(gain2);
                     gain2.connect(audioCtx.destination);
 
                     osc.type = 'sine';
-                    osc.frequency.setValueAtTime(523.25, now); // C5
+                    osc.frequency.setValueAtTime(523.25, now);
                     gain.gain.setValueAtTime(0.15, now);
                     gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
 
                     osc2.type = 'sine';
-                    osc2.frequency.setValueAtTime(659.25, now + 0.08); // E5
+                    osc2.frequency.setValueAtTime(659.25, now + 0.08);
                     gain2.gain.setValueAtTime(0.15, now + 0.08);
                     gain2.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
 
@@ -561,7 +650,6 @@
                     osc2.start(now + 0.08);
                     osc2.stop(now + 0.25);
                 } else if (type === 'alert') {
-                    // Emergency alert tone
                     osc.type = 'sawtooth';
                     osc.frequency.setValueAtTime(350, now);
                     osc.frequency.setValueAtTime(450, now + 0.1);
@@ -570,7 +658,6 @@
                     osc.start(now);
                     osc.stop(now + 0.2);
                 } else if (type === 'gate') {
-                    // Gate mechanical movement tone
                     osc.type = 'triangle';
                     osc.frequency.setValueAtTime(200, now);
                     osc.frequency.linearRampToValueAtTime(600, now + 0.15);
@@ -584,13 +671,57 @@
             }
         }
 
-        // Global fallback listener to catch buttons
         document.addEventListener('click', (e) => {
             const btn = e.target.closest('button, select, input[type="checkbox"]');
             if (btn && !btn.getAttribute('onclick')?.includes('playSound')) {
                 playSound('click');
             }
         });
+
+        // ROLE SELECTION ROUTER
+        function selectUserRole(role) {
+            playSound('click');
+            currentUserRole = role;
+            document.getElementById('roleSelectionModal').classList.add('hidden');
+           
+            const badge = document.getElementById('currentRoleBadge');
+            const revCard = document.getElementById('managerRevenueCard');
+            const chartCard = document.getElementById('managerChartCard');
+            const feedCard = document.getElementById('managerFeedCard');
+            const toolsCard = document.getElementById('managerToolsCard');
+            const peakToggle = document.getElementById('peakToggleContainer');
+            const emergencyBtn = document.getElementById('btnEmergencyMode');
+            const fastForwardBtn = document.getElementById('btnFastForward');
+
+            if (role === 'manager') {
+                badge.innerText = "Manager Portal";
+                badge.className = "font-extrabold uppercase text-[10px] text-teal-300";
+                revCard.classList.remove('hidden');
+                chartCard.classList.remove('hidden');
+                feedCard.classList.remove('hidden');
+                toolsCard.classList.remove('hidden');
+                peakToggle.classList.remove('hidden');
+                emergencyBtn.classList.remove('hidden');
+                fastForwardBtn.classList.remove('hidden');
+            } else {
+                badge.innerText = "Visitor View";
+                badge.className = "font-extrabold uppercase text-[10px] text-emerald-300";
+                revCard.classList.add('hidden');
+                chartCard.classList.add('hidden');
+                feedCard.classList.add('hidden');
+                toolsCard.classList.add('hidden');
+                peakToggle.classList.add('hidden');
+                emergencyBtn.classList.add('hidden');
+                fastForwardBtn.classList.add('hidden');
+            }
+
+            renderDashboard();
+        }
+
+        function openRoleSelector() {
+            playSound('click');
+            document.getElementById('roleSelectionModal').classList.remove('hidden');
+        }
 
         // DATA STATE
         const totalFloors = 3;
@@ -609,7 +740,6 @@
         const PLATE_REGEX = /^[A-Z]{2}[0-9]{1,2}[A-Z]{1,2}[0-9]{4}$/;
         let pieChart;
 
-        // 1. INITIALIZATION
         function initData() {
             parkingData = [];
             for (let f = 1; f <= totalFloors; f++) {
@@ -618,30 +748,28 @@
                     const isEV = (s >= 3 && s <= 5);
                     const isBike = (s % 4 === 0 && !isEV && !isPwd);
                     const type = isPwd ? 'pwd' : (isEV ? 'ev' : (isBike ? 'bike' : 'car'));
-                    
+                   
                     parkingData.push({
                         id: `F${f}-S${s < 10 ? '0' + s : s}`,
                         slotNum: s,
                         floor: f,
                         type: type,
-                        status: 'free', 
+                        status: 'free',
                         chargePct: isEV ? Math.floor(Math.random() * 80) + 10 : null,
                         reservedDetails: null
                     });
                 }
             }
 
-            // Seed initial occupied slots
             parkingData.forEach(slot => {
                 if(slot.status === 'free' && Math.random() > 0.65) {
                     slot.status = 'occupied';
                 }
             });
-            
-            // Seed sample reservations
+           
             seedReservation(parkingData[5], 'Aarav K.', 'MH12AB1234', 2);
             seedReservation(parkingData[25], 'Priya M.', 'DL01CH9999', 3);
-            
+           
             startLiveSim();
             window.addEventListener('resize', () => { if (activeRoutedSlotId) drawAIRouteToSlot(activeRoutedSlotId); });
         }
@@ -652,13 +780,13 @@
             const charge = hours * RATES[slot.type];
             slot.reservedDetails = { name, plate, hours, charge };
             reservations.push({ slotId: slot.id, name, plate, charge, isOverstay: false });
+            totalSystemRevenue += charge;
         }
 
-        // 2. INPUT VALIDATION
         function validatePlateInput(inputEl) {
             const cleanVal = inputEl.value.toUpperCase().replace(/[\s-]/g, '');
             const isValid = PLATE_REGEX.test(cleanVal);
-            
+           
             if (inputEl.value.trim().length > 0) {
                 if (isValid) {
                     inputEl.classList.remove('border-red-500', 'focus:ring-red-200');
@@ -673,42 +801,45 @@
             return isValid;
         }
 
-        // 3. RENDER DASHBOARD & REALISTIC PARKING LOT
         function renderDashboard() {
             const topGrid = document.getElementById('parkingGridTop');
             const bottomGrid = document.getElementById('parkingGridBottom');
             document.getElementById('currentFloorName').innerText = `Floor ${currentFloor}`;
 
-            // Filter logic
             const visibleSlots = parkingData.filter(s => {
                 const matchFloor = s.floor === currentFloor;
                 const matchType = currentType === 'all' || s.type === currentType;
                 return matchFloor && matchType;
             });
 
-            // Analytics updates
             const freeCount = parkingData.filter(s => s.status === 'free').length;
             const occupiedCount = parkingData.filter(s => s.status !== 'free').length;
 
             document.getElementById('statAvailable').innerText = freeCount;
-            const occupancyPct = Math.round((occupiedCount / parkingData.length) * 100);
-            document.getElementById('occupancyRateTag').innerText = `${occupancyPct}% Occupied`;
+            document.getElementById('statRevenue').innerText = `₹${totalSystemRevenue}`;
+
+            if (currentUserRole === 'manager') {
+                const occupancyPct = Math.round((occupiedCount / parkingData.length) * 100);
+                document.getElementById('occupancyRateTag').innerText = `${occupancyPct}% Occupied`;
+            }
 
             topGrid.innerHTML = '';
             bottomGrid.innerHTML = '';
 
             visibleSlots.forEach(slot => {
                 const card = document.createElement('div');
-                
-                // Adaptive slot card colors for Light & Dark modes
-                let bg = 'bg-emerald-50 border-emerald-500 text-emerald-800 dark:bg-emerald-950/30 dark:border-emerald-500/50 dark:text-emerald-300';
-                let badge = ''; // Removed green FREE badge for available slots
-                
-                if (isEmergencyMode && slot.floor === 1) {
+               
+                let bg = 'bg-emerald-50/60 border-emerald-500/80 text-emerald-900 dark:bg-emerald-950/20 dark:border-emerald-500/40 dark:text-emerald-300';
+                let badge = '';
+               
+                if (slot.status === 'maintenance') {
+                    bg = 'bg-amber-100 border-amber-500 text-amber-900 dark:bg-amber-950/60 dark:border-amber-500 dark:text-amber-200';
+                    badge = '<span class="bg-amber-600 text-white text-[9px] font-bold px-2 py-0.5 rounded">SERVICE</span>';
+                } else if (isEmergencyMode && slot.floor === 1) {
                     bg = 'bg-rose-50 border-rose-600 text-rose-800 dark:bg-rose-950/40 dark:border-rose-600 dark:text-rose-300';
                     badge = '<span class="bg-rose-600 text-white text-[9px] font-bold px-2 py-0.5 rounded">BLOCKED</span>';
                 } else if (slot.status === 'occupied') {
-                    bg = 'bg-slate-200 border-slate-300 text-slate-700 dark:bg-slate-800/80 dark:border-slate-600 dark:text-slate-400';
+                    bg = 'bg-slate-200 border-slate-300 text-slate-700 dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-400';
                     badge = '<span class="bg-slate-600 text-white text-[9px] font-bold px-2 py-0.5 rounded">OCCUPIED</span>';
                 } else if (slot.status === 'reserved') {
                     bg = 'bg-amber-50 border-amber-500 text-amber-800 dark:bg-amber-950/40 dark:border-amber-500 dark:text-amber-300';
@@ -720,14 +851,14 @@
 
                 let icon = 'fa-car';
                 let label = 'Car';
-                let iconColor = "text-blue-500 dark:text-blue-400";
+                let iconColor = "text-emerald-600 dark:text-emerald-400";
 
                 if (slot.type === 'bike') {
                     iconColor = "text-amber-500 dark:text-amber-400";
                     icon = 'fa-motorcycle';
                     label = 'Bike';
                 } else if (slot.type === 'ev') {
-                    iconColor = "text-cyan-600 dark:text-cyan-400";
+                    iconColor = "text-teal-500 dark:text-teal-400";
                     icon = 'fa-charging-station';
                     label = 'EV Charging';
                 } else if (slot.type === 'pwd') {
@@ -737,16 +868,15 @@
                 }
 
                 card.className = `slot-card h-32 border-2 rounded-2xl p-3 flex flex-col justify-between cursor-pointer relative overflow-hidden backdrop-blur-sm ${bg}`;
-                card.id = `card-${slot.id}`; 
-                
-                // EV charging meter
+                card.id = `card-${slot.id}`;
+               
                 let evTrackerHtml = '';
                 if(slot.type === 'ev' && (slot.status === 'occupied' || slot.status === 'reserved')) {
                     evTrackerHtml = `
                         <div class="w-full bg-slate-300 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden my-auto">
-                            <div class="bg-cyan-500 dark:bg-cyan-400 h-full rounded-full transition-all duration-500" style="width: ${slot.chargePct}%"></div>
+                            <div class="bg-teal-500 dark:bg-teal-400 h-full rounded-full transition-all duration-500" style="width: ${slot.chargePct}%"></div>
                         </div>
-                        <div class="text-[9px] text-cyan-700 dark:text-cyan-300 font-extrabold text-center">⚡ ${slot.chargePct}% Charged</div>
+                        <div class="text-[9px] text-teal-700 dark:text-teal-300 font-extrabold text-center">⚡ ${slot.chargePct}% Charged</div>
                     `;
                 }
 
@@ -762,7 +892,7 @@
                     ${evTrackerHtml}
                     <div class="text-center h-6 flex items-center justify-center">
                         ${slot.status === 'free' && !(isEmergencyMode && slot.floor === 1)
-                            ? `<button class="w-full text-[10px] bg-indigo-600 hover:bg-indigo-500 text-white font-extrabold py-1 rounded-lg shadow">BOOK</button>`
+                            ? `<button class="w-full text-[10px] bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold py-1 rounded-lg shadow-md shadow-emerald-600/20">BOOK</button>`
                             : `<div class="text-[10px] font-bold font-mono truncate text-slate-700 dark:text-slate-300">${slot.reservedDetails ? slot.reservedDetails.plate : '---'}</div>`
                         }
                     </div>
@@ -770,6 +900,10 @@
 
                 card.onclick = () => {
                     playSound('click');
+                    if (slot.status === 'maintenance') {
+                        alert("This slot is currently Out Of Service for maintenance.");
+                        return;
+                    }
                     if (isEmergencyMode && slot.floor === 1) {
                         alert("Floor 1 is restricted due to Emergency Clearance Mode!");
                         return;
@@ -791,15 +925,56 @@
                 }
             });
 
-            updateChart();
+            if (currentUserRole === 'manager') {
+                updateChart();
+            }
             renderReservations();
-            
+           
             if (activeRoutedSlotId) {
                 setTimeout(() => drawAIRouteToSlot(activeRoutedSlotId), 150);
             }
         }
 
-        // 4. ANIMATED GATES CONTROLLER
+        function triggerSystemAudit() {
+            playSound('gate');
+            logActivity("🩺 System Diagnostics: ANPR Cameras & Sensors Operational.");
+            alert("ANPR Cameras and Sensors verified. All gates operating normally.");
+        }
+
+        function openManualOverrideModal() {
+            playSound('click');
+            document.getElementById('managerOverrideModal').classList.remove('hidden');
+        }
+
+        function closeOverrideModal() {
+            document.getElementById('managerOverrideModal').classList.add('hidden');
+        }
+
+        function applySlotOverride(action) {
+            playSound('click');
+            const targetId = document.getElementById('overrideSlotIdInput').value.trim().toUpperCase();
+            const slot = parkingData.find(s => s.id === targetId);
+
+            if (!slot) {
+                alert("Slot ID not found. Please check format (e.g. F1-S01).");
+                return;
+            }
+
+            if (action === 'maintenance') {
+                slot.status = 'maintenance';
+                slot.reservedDetails = null;
+                logActivity(`🔧 Manager set Slot ${slot.id} to OUT OF SERVICE`);
+            } else if (action === 'clear') {
+                slot.status = 'free';
+                slot.reservedDetails = null;
+                reservations = reservations.filter(r => r.slotId !== slot.id);
+                logActivity(`🟢 Manager force-cleared Slot ${slot.id}`);
+            }
+
+            closeOverrideModal();
+            renderDashboard();
+        }
+
         function triggerGateAnimation(gateType) {
             playSound('gate');
             const gateArm = document.getElementById(gateType === 'entry' ? 'entryGateArm' : 'exitGateArm');
@@ -814,7 +989,6 @@
             }, 3000);
         }
 
-        // 5. AI ROUTE GUIDANCE ENGINE
         function drawAIRouteToSlot(slotId) {
             const targetSlot = parkingData.find(s => s.id === slotId);
             if (!targetSlot) return;
@@ -865,15 +1039,14 @@
             document.querySelectorAll('.slot-card').forEach(c => c.classList.remove('highlight-slot'));
         }
 
-        // 6. FLOOR SWITCHING & FILTERS
         function switchFloor(floorNum) {
             currentFloor = floorNum;
             document.getElementById('floorSelect').value = floorNum;
-            
+           
             [1, 2, 3].forEach(f => {
                 const btn = document.getElementById(`btnFloor${f}`);
                 if (f === floorNum) {
-                    btn.className = "px-3 py-1.5 rounded-lg transition bg-indigo-600 text-white shadow";
+                    btn.className = "px-3 py-1.5 rounded-lg transition bg-emerald-600 text-white shadow-md";
                 } else {
                     btn.className = "px-3 py-1.5 rounded-lg transition text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700";
                 }
@@ -892,13 +1065,12 @@
             renderDashboard();
         });
 
-        // 7. SEARCH & CHECKOUT SYSTEM
         function findMyCar() {
             const query = document.getElementById('findCarInput').value.trim().toUpperCase().replace(/[\s-]/g, '');
             if (!query) return alert("Please enter a license plate number.");
 
             const foundSlot = parkingData.find(s => s.reservedDetails && s.reservedDetails.plate === query);
-            
+           
             if (foundSlot) {
                 switchFloor(foundSlot.floor);
                 currentType = 'all';
@@ -918,11 +1090,11 @@
             if (!query) return alert("Enter a license plate number to checkout.");
 
             const slotIndex = parkingData.findIndex(s => s.reservedDetails && s.reservedDetails.plate === query);
-            
+           
             if (slotIndex !== -1) {
                 const slot = parkingData[slotIndex];
                 const res = slot.reservedDetails;
-                
+               
                 triggerGateAnimation('exit');
                 playSound('success');
 
@@ -933,11 +1105,11 @@
                 document.getElementById('receiptModal').classList.remove('hidden');
 
                 logActivity(`🚗 Checkout completed for ${query} from Slot ${slot.id}`);
-                
+               
                 parkingData[slotIndex].status = 'free';
                 parkingData[slotIndex].reservedDetails = null;
                 reservations = reservations.filter(r => r.plate !== query);
-                
+               
                 if (activeRoutedSlotId === slot.id) clearRouteGuidance();
                 document.getElementById('findCarInput').value = '';
                 renderDashboard();
@@ -950,17 +1122,16 @@
             document.getElementById('receiptModal').classList.add('hidden');
         }
 
-        // 8. SURCHARGE & EMERGENCY MODES
         function togglePeakHours() {
             isPeakHours = !isPeakHours;
             const nav = document.getElementById('mainNav');
             if(isPeakHours) {
-                nav.classList.replace('bg-indigo-600/90', 'bg-rose-600/90');
-                nav.classList.replace('dark:bg-indigo-900/90', 'dark:bg-rose-900/90');
+                nav.classList.replace('from-emerald-900/90', 'from-rose-900/90');
+                nav.classList.replace('via-teal-900/90', 'via-rose-950/90');
                 logActivity("🔥 Dynamic Peak Hour rates enabled (1.5x)");
             } else {
-                nav.classList.replace('bg-rose-600/90', 'bg-indigo-600/90');
-                nav.classList.replace('dark:bg-rose-900/90', 'dark:bg-indigo-900/90');
+                nav.classList.replace('from-rose-900/90', 'from-emerald-900/90');
+                nav.classList.replace('via-rose-950/90', 'via-teal-900/90');
                 logActivity("🌿 Standard pricing active");
             }
         }
@@ -980,18 +1151,17 @@
             renderDashboard();
         }
 
-        // 9. MODAL BOOKING LOGIC
         function openBookingModal(slot) {
             const index = parkingData.findIndex(s => s.id === slot.id);
             if (index === -1) return;
-            
+           
             document.getElementById('modalSlotIndex').value = index;
             document.getElementById('modalSlotId').innerText = slot.id;
-            
+           
             const now = new Date();
             document.getElementById('bookTime').value = now.toTimeString().slice(0, 5);
             document.getElementById('peakWarning').style.display = isPeakHours ? 'block' : 'none';
-            
+           
             const plateEl = document.getElementById('custPlate');
             const nameEl = document.getElementById('custName');
             plateEl.value = '';
@@ -1004,11 +1174,11 @@
             setTimeout(() => nameEl.focus(), 100);
         }
 
-        function closeModal() { 
-            document.getElementById('bookingModal').classList.add('hidden'); 
+        function closeModal() {
+            document.getElementById('bookingModal').classList.add('hidden');
             document.getElementById('modalSlotIndex').value = '';
         }
-        function closeTicket() { 
+        function closeTicket() {
             document.getElementById('ticketModal').classList.add('hidden');
             if (activeRoutedSlotId) drawAIRouteToSlot(activeRoutedSlotId);
         }
@@ -1016,14 +1186,14 @@
         function calculateModalFee() {
             const idxStr = document.getElementById('modalSlotIndex').value;
             if (idxStr === "") return;
-            
+           
             const idx = parseInt(idxStr);
             const slot = parkingData[idx];
             if (!slot) return;
-            
+           
             const hours = parseInt(document.getElementById('bookHours').value) || 1;
             let rate = RATES[slot.type] || 50;
-            if (isPeakHours && slot.type !== 'pwd') rate = rate * 1.5; 
+            if (isPeakHours && slot.type !== 'pwd') rate = rate * 1.5;
 
             document.getElementById('modalHourlyRate').innerText = `${slot.type.toUpperCase()} Rate: ₹${rate}/hr`;
             document.getElementById('modalTotalCharge').innerText = `₹${hours * rate}`;
@@ -1037,7 +1207,7 @@
             const slotIndex = parseInt(idxStr);
             const slot = parkingData[slotIndex];
             const plateInput = document.getElementById('custPlate');
-            
+           
             if (!validatePlateInput(plateInput)) {
                 alert("Invalid format! Please enter a valid Indian plate number (e.g. MH12AB1234).");
                 plateInput.focus();
@@ -1047,7 +1217,7 @@
             const name = document.getElementById('custName').value.trim();
             const plate = plateInput.value.toUpperCase().replace(/[\s-]/g, '');
             const hours = parseInt(document.getElementById('bookHours').value) || 1;
-            
+           
             let rate = RATES[slot.type];
             if (isPeakHours && slot.type !== 'pwd') rate = rate * 1.5;
             const charge = hours * rate;
@@ -1055,6 +1225,7 @@
             slot.status = 'reserved';
             slot.reservedDetails = { name, plate, hours, charge };
             reservations.unshift({ slotId: slot.id, name, plate, charge, isOverstay: false });
+            totalSystemRevenue += charge;
 
             closeModal();
             renderDashboard();
@@ -1066,20 +1237,19 @@
             document.getElementById('ticketSlot').innerText = slot.id;
             document.getElementById('ticketPlate').innerText = plate;
             document.getElementById('ticketAmount').innerText = `₹${charge}`;
-            
+           
             const qrData = `MallPark-Ticket:${slot.id}|${plate}|Paid:Rs${charge}`;
             document.getElementById('qrImage').src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(qrData)}`;
-            
+           
             document.getElementById('ticketModal').classList.remove('hidden');
             logActivity(`🎟️ Pass issued for ${plate} at Slot ${slot.id}`);
         }
 
-        // 10. LIVE SIMULATION & TIME LEAP
         function startLiveSim() {
             if (simInterval) clearInterval(simInterval);
             simInterval = setInterval(() => {
                 if (!isLiveSimActive) return;
-                
+               
                 const randomSlot = parkingData[Math.floor(Math.random() * parkingData.length)];
                 if (randomSlot && randomSlot.status === 'free' && Math.random() > 0.75) {
                     randomSlot.status = 'occupied';
@@ -1125,14 +1295,15 @@
             parkingData.forEach(slot => {
                 if (slot.status === 'reserved' && Math.random() > 0.4) {
                     slot.status = 'overstay';
-                    const penalty = 200; 
+                    const penalty = 200;
                     if (slot.reservedDetails) slot.reservedDetails.charge += penalty;
                     const res = reservations.find(r => r.slotId === slot.id);
                     if(res && !res.isOverstay) { res.charge += penalty; res.isOverstay = true; }
+                    totalSystemRevenue += penalty;
                     triggered = true;
                 }
             });
-            
+           
             if(triggered) {
                 alert("Fast-Forward Triggered: Overstay penalties applied to expired slots.");
                 logActivity("⚠️ Time Fast-Forward: Overstay penalty applied");
@@ -1142,21 +1313,21 @@
 
         function logActivity(message) {
             const feed = document.getElementById('activityFeed');
+            if (!feed) return;
             const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            
+           
             if (feed.children.length === 1 && feed.children[0].classList.contains('italic')) {
                 feed.innerHTML = '';
             }
-            
+           
             const entry = document.createElement('div');
             entry.className = "p-1.5 rounded bg-gray-50/80 dark:bg-gray-800/80 border dark:border-gray-700 flex justify-between text-[11px]";
             entry.innerHTML = `<span class="font-medium">${message}</span> <span class="text-gray-400 font-mono text-[9px]">${time}</span>`;
-            
+           
             feed.prepend(entry);
             if (feed.children.length > 8) feed.removeChild(feed.lastChild);
         }
 
-        // 11. CHARTS & THEME
         function renderReservations() {
             const container = document.getElementById('reservationsList');
             container.innerHTML = '';
@@ -1164,8 +1335,8 @@
 
             reservations.forEach(r => {
                 const bg = r.isOverstay ? 'bg-rose-50/80 border-rose-200 dark:bg-rose-950/40' : 'bg-gray-50/80 border-gray-100 dark:bg-gray-800/80 dark:border-gray-700';
-                const text = r.isOverstay ? 'text-rose-600 dark:text-rose-400' : 'text-indigo-600 dark:text-indigo-400';
-                
+                const text = r.isOverstay ? 'text-rose-600 dark:text-rose-400' : 'text-emerald-600 dark:text-emerald-400';
+               
                 container.innerHTML += `
                     <div class="${bg} p-2.5 rounded-xl border flex justify-between items-center">
                         <div>
@@ -1178,17 +1349,20 @@
         }
 
         function updateChart() {
+            const chartCanvas = document.getElementById('pieChart');
+            if (!chartCanvas) return;
+
             if(!pieChart) {
-                pieChart = new Chart(document.getElementById('pieChart').getContext('2d'), {
+                pieChart = new Chart(chartCanvas.getContext('2d'), {
                     type: 'doughnut',
-                    data: { 
-                        labels: ['Cars', 'Bikes', 'EVs', 'Accessible'], 
-                        datasets: [{ data: [0,0,0,0], backgroundColor: ['#6366f1', '#f59e0b', '#06b6d4', '#a855f7'] }] 
+                    data: {
+                        labels: ['Cars', 'Bikes', 'EVs', 'Accessible'],
+                        datasets: [{ data: [0,0,0,0], backgroundColor: ['#10b981', '#f59e0b', '#14b8a6', '#a855f7'] }]
                     },
-                    options: { 
-                        responsive: true, 
-                        maintainAspectRatio: false, 
-                        plugins: { legend: { position: 'right', labels: { boxWidth: 10, font:{size:10} } } } 
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { position: 'right', labels: { boxWidth: 10, font:{size:10, family: 'Montserrat, sans-serif'} } } }
                     }
                 });
             }
@@ -1202,14 +1376,14 @@
             pieChart.update();
         }
 
-        document.getElementById('themeToggle').addEventListener('click', () => { 
+        document.getElementById('themeToggle').addEventListener('click', () => {
             playSound('click');
-            document.documentElement.classList.toggle('dark'); 
+            document.documentElement.classList.toggle('dark');
         });
 
-        // Run application
+        // Always launch role selection screen on initial visit
         initData();
-        renderDashboard();
+        openRoleSelector();
     </script>
 </body>
 </html>
