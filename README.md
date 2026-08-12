@@ -55,16 +55,33 @@ The project focuses on maximizing:
 
 ## 🛠️ Technology Stack
 
-| Category | Technologies |
-| :--- | :--- |
-| **Frontend Core** | HTML5, CSS3, Vanilla JavaScript (ES6+) |
-| **Styling** | Tailwind CSS |
-| **Icons & Fonts** | Font Awesome 6, Google Fonts (Inter, JetBrains Mono) |
-| **Data Visualization** | Chart.js (Real-time Occupancy Doughnut Charts) |
-| **External APIs** | QR Code Generator API |
-| **Native APIs** | Web Audio API (Sound), LocalStorage (Traffic Monitoring) |
+*   **Frontend Core:** HTML5, CSS3, Vanilla JavaScript (ES6+)
+*   **Styling:** Tailwind CSS
+*   **Icons & Fonts:** Font Awesome 6, Google Fonts (Inter, JetBrains Mono)
+*   **Data Visualization:** Chart.js (Real-time Occupancy Doughnut Charts)
+*   **External APIs:** QR Code Generator API
+*   **Native APIs:** Web Audio API (Sound), LocalStorage (Traffic Monitoring)
 
 ---
+
+Markdown
+
+
+## 👑 Meet the Team 👑
+
+### Team Name: **🔥 The Renderers 🔥**
+
+* 👨‍💻 **Arnaav Dutta** | **Team Lead & AI Integration**  
+  *(Architected the core project structure, developed the AI routing logic, and managed overall system algorithms.)*
+
+* 🚀 **Ayman Kazi** | **Lead Product Architect & Visitor Experience**  
+  *(Architected the entire Mall Visitor module, ideated the Instant/Advance booking & pricing logic, and developed the animated security guidelines & traffic monitor.)*
+
+* 🛡️ **Aryan Jaiswal** | **Admin Suite & Manager Portal Developer**  
+  *(Developed the highly secure Manager Portal, real-time activity feeds, charting data, and the manual override/emergency systems.)*
+
+* 🖌️ **Sarang Joshi** | **Frontend Developer & UI/UX Designer**  
+  *(Responsible for the beautiful visual styling, responsive layout mechanics, Dark/Light mode integration, and Tailwind CSS implementation.)*
 
 ## 📂 Project Structure
 
@@ -73,6 +90,3 @@ mallpark-pro/
 │
 ├── index.html          # Main application (All logic, styles, and markup)
 └── README.md           # Project documentation
-
-Future Enhancements🧠 Machine learning occupancy prediction.📡 Actual hardware IoT sensor integration (NodeMCU/ESP8266).💳 Live Payment Gateway API integration (Razorpay/Stripe).📷 Real-world CCTV-based vehicle number plate recognition (OpenCV).👑 Meet the Team 👑Team Name: 🔥 The Renderers 🔥Team MemberProject Role & Contributions👨‍💻 Arnaav DuttaTeam Lead & AI Integration(Architected the core project structure, developed the AI routing logic, and managed overall system algorithms.)🚀 Ayman KaziLead Product Architect & Visitor Experience(Architected the entire Mall Visitor module, ideated the Instant/Advance booking & pricing logic, and developed the animated security guidelines & traffic monitor.)
-
