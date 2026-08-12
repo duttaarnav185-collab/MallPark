@@ -64,8 +64,6 @@ The project focuses on maximizing:
 
 ---
 
-Markdown
-
 
 ## 👑 Meet the Team 👑
 
