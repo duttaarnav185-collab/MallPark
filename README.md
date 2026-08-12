@@ -74,3 +74,5 @@ mallpark-pro/
 ├── index.html          # Main application (All logic, styles, and markup)
 └── README.md           # Project documentation
 
+Future Enhancements🧠 Machine learning occupancy prediction.📡 Actual hardware IoT sensor integration (NodeMCU/ESP8266).💳 Live Payment Gateway API integration (Razorpay/Stripe).📷 Real-world CCTV-based vehicle number plate recognition (OpenCV).👑 Meet the Team 👑Team Name: 🔥 The Renderers 🔥Team MemberProject Role & Contributions👨‍💻 Arnaav DuttaTeam Lead & AI Integration(Architected the core project structure, developed the AI routing logic, and managed overall system algorithms.)🚀 Ayman KaziLead Product Architect & Visitor Experience(Architected the entire Mall Visitor module, ideated the Instant/Advance booking & pricing logic, and developed the animated security guidelines & traffic monitor.)
+
